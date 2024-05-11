@@ -33,6 +33,15 @@ namespace StrategoBeta.WPFClient
 				SetProperty(ref selectedgridcell, value);
 			}
 		}
+		Rank selectedRank;
+		public Rank SelectedRank 
+		{
+			get { return selectedRank; }
+			set
+			{
+				SetProperty(ref selectedRank, value);
+			}
+		}
 		//side bar Command for placing piecies
         public ICommand AddMarshalCommand { get; set; }
 		public ICommand AddGeneralCommand { get; set; }
@@ -55,28 +64,34 @@ namespace StrategoBeta.WPFClient
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
         {	Pieces = new ObservableCollection<Piece>();
 			actualTeam = Team.Blue;
-			blueWindow = bluewindow;
-            redWindow= redwindow;
 			CommandSetup();
-            //for (int i = 0; i < 12; i++)
-            //{
-            //    for (int j = 0; j < 12; j++)
-            //    {
-            //        if (i >= 1 && i < 11 && j >= 1 && j < 11)
-            //        {
-            //            Pieces.Add(new Piece() {Column = i, Row = j, Character = new Character(0,Team.Blue) });
-            //        }
-            //    }
-            //}
+			blueWindow = bluewindow;
+			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
+			redWindow = redwindow;
         }
-        void CommandSetup()
+
+		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
+		{
+			// Handle the button click event here
+			int row = e.Row;
+			int column = e.Column;
+			Button button = e.button;
+			if(canPlacePiece)
+			{
+				Pieces.Add(new Character(Rank.Marshal, Team.Blue), row, column);
+			}
+			else 
+			{ }
+		}
+
+		void CommandSetup()
         {
 			AddMarshalCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Marshal, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column)),
+				() => SelectedRank=Rank.Marshal,
 				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
 				);
 			AddGeneralCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.General, actualTeam), 1, 1)),
+				() => Pieces.Add(new Piece(new Character(Rank.General, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column)),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 9)
 				); 
 			AddColonelCommand = new RelayCommand(

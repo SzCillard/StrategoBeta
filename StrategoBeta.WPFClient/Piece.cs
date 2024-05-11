@@ -10,7 +10,7 @@ namespace StrategoBeta.WPFClient
 {
     public class Piece
     {
-		public Piece(Character character, int column, int row)
+		public Piece(Character character, int row,int column)
 		{
 			Column = column;
 			Character = character;
