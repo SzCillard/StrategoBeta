@@ -42,10 +42,8 @@
             <Button Content="Play"  Style="{StaticResource StartButton}" Click="Button_Click" Width="200" Margin="5"/>
             <Button Content="Quit Game"  Style="{StaticResource StartButton}" Click="Button_ClickQuit" Width="200" Margin="5"/>
         </StackPanel>
-        <!--
         <Grid.Background>
             <ImageBrush ImageSource="Images/mainmenu.png" />
         </Grid.Background>
-        -->
     </Grid>
 </Window>
