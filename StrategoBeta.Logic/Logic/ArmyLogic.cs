@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using StrategoBeta.Logic.Interface;
+using StrategoBeta.Logic.Logic;
 using StrategoBeta.Models;
 using System;
 using System.Collections.Generic;
