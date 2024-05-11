@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrategoBeta.WPFClient", "StrategoBeta.WPFClient\StrategoBeta.WPFClient.csproj", "{EC7E5256-19A2-4C86-AE4D-9951021405EC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategoBeta.Models", "Stratego.Models\StrategoBeta.Models.csproj", "{55C37459-94ED-4ECC-A2C3-F468CA264899}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C37459-94ED-4ECC-A2C3-F468CA264899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C37459-94ED-4ECC-A2C3-F468CA264899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C37459-94ED-4ECC-A2C3-F468CA264899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C37459-94ED-4ECC-A2C3-F468CA264899}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
