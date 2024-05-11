@@ -16,10 +16,26 @@ namespace StrategoBeta.WPFClient
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		BlueWindow blueWindow;
+		RedWindow redWindow;
+		MainWindowViewModel viewModel;
 		public MainWindow()
 		{
 			InitializeComponent();
-            DataContext = new MainWindowViewModel();
-        }
-    }
+			blueWindow = new BlueWindow();
+			redWindow = new RedWindow();
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			viewModel = new MainWindowViewModel(blueWindow, redWindow);
+			blueWindow.Show();
+			this.Close();
+		}
+
+		private void Button_ClickQuit(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+	}
 }
