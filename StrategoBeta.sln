@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrategoBeta.WPFClient", "StrategoBeta.WPFClient\StrategoBeta.WPFClient.csproj", "{EC7E5256-19A2-4C86-AE4D-9951021405EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategoBeta.WPFClient", "StrategoBeta.WPFClient\StrategoBeta.WPFClient.csproj", "{EC7E5256-19A2-4C86-AE4D-9951021405EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3} = {0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratego.Logic", "Stratego.Logic\Stratego.Logic.csproj", "{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC7E5256-19A2-4C86-AE4D-9951021405EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
