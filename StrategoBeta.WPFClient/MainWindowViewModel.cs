@@ -78,7 +78,7 @@ namespace StrategoBeta.WPFClient
 			Button button = e.button;
 			if(canPlacePiece)
 			{
-				Pieces.Add(new Character(Rank.Marshal, Team.Blue), row, column);
+				Pieces.Add(new Piece(new Character(Rank.Marshal, Team.Blue), row, column));
 			}
 			else 
 			{ }
