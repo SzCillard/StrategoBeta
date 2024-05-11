@@ -1,6 +1,6 @@
-﻿using Stratego.Models;
+﻿using StrategoBeta.Models;
 
-namespace Stratego.Logic.Interface
+namespace StrategoBeta.Logic.Interface
 {
     public interface IArmyLogic
     {

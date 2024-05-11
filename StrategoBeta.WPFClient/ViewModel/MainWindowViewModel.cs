@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Stratego.Logic.Interface;
+using StrategoBeta.Logic.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;

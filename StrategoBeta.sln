@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategoBeta.WPFClient", "S
 		{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3} = {0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stratego.Logic", "Stratego.Logic\Stratego.Logic.csproj", "{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategoBeta.Logic", "Stratego.Logic\StrategoBeta.Logic.csproj", "{0AE0ED78-CA42-404B-9071-AC49ACCBF0A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

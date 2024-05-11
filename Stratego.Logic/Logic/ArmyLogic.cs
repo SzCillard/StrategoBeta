@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Stratego.Logic.Interface;
-using Stratego.Models;
+using StrategoBeta.Logic.Interface;
+using StrategoBeta.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace Stratego.Logic.ArmyLogic
+namespace StrategoBeta.Logic.ArmyLogic
 {
     public class ArmyLogic : IArmyLogic
 	{

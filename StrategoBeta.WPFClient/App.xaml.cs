@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
-using Stratego.Logic.ArmyLogic;
-using Stratego.Logic.Interface;
+using StrategoBeta.Logic.ArmyLogic;
+using StrategoBeta.Logic.Interface;
 using System.Configuration;
 using System.Data;
 using System.Windows;
