@@ -14,4 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\StrategoBeta.Logic\StrategoBeta.Logic.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
 </Project>
