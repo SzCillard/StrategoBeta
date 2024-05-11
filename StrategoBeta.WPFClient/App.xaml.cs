@@ -1,4 +1,9 @@
-﻿using System.Configuration;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
+using StrategoBeta.Logic.ArmyLogic;
+using StrategoBeta.Logic.Interface;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +14,15 @@ namespace StrategoBeta.WPFClient
 	/// </summary>
 	public partial class App : Application
 	{
-	}
+        public App()
+        {
+            Ioc.Default.ConfigureServices(
+                new ServiceCollection()
+                .AddSingleton<IArmyLogic, ArmyLogic>()
+                .AddSingleton<IMessenger>(WeakReferenceMessenger.Default)
+                .BuildServiceProvider()
+                );
+        }
+    }
 
 }
