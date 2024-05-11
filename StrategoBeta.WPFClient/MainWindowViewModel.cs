@@ -23,7 +23,7 @@ namespace StrategoBeta.WPFClient
         BlueWindow blueWindow;
         RedWindow redWindow;
         Team actualTeam;
-		bool initialPlacement;
+		bool initialPlacement = true;
 		SelectedGridCell selectedgridcell;
 		public SelectedGridCell SelectedGridCell
 		{
@@ -43,6 +43,8 @@ namespace StrategoBeta.WPFClient
 			}
 		}
 		//side bar Command for placing piecies
+		public event EventHandler RankSelectionEvent;
+		public event EventHandler ReadyEvent;
         public ICommand AddMarshalCommand { get; set; }
 		public ICommand AddGeneralCommand { get; set; }
 		public ICommand AddColonelCommand { get; set; }
@@ -55,17 +57,19 @@ namespace StrategoBeta.WPFClient
 		public ICommand AddSpyCommand { get; set; }
 		public ICommand AddMineCommand { get; set; }
 		public ICommand AddFlagCommand { get; set; }
+		public ICommand ReadyCommand { get; set; }
 
 		public ObservableCollection<Piece> Pieces { set; get; } = new ObservableCollection<Piece>();
         public MainWindowViewModel()
         {
             FillWithEmptyButtons();
+            CommandSetup();
+			ReadyCommand = new RelayCommand(() => Ready());
         }
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
 		{ 
 			actualTeam = Team.Blue;
-			CommandSetup();
-			blueWindow = bluewindow;
+            blueWindow = bluewindow;
 			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
 			redWindow = redwindow;
         }
@@ -78,7 +82,10 @@ namespace StrategoBeta.WPFClient
 			Button button = e.button;
 			if(initialPlacement)
 			{
-				Pieces.Add(new Piece(new Character(Rank.Marshal, Team.Blue), row, column));
+				/////////////////////////////////////////////////////
+				//TODO: Selected rank stuck on FLAG and no clue why//
+				/////////////////////////////////////////////////////
+				Pieces.Add(new Piece(new Character(SelectedRank, Team.Blue), row, column));
 			}
 			else 
 			{
@@ -88,52 +95,52 @@ namespace StrategoBeta.WPFClient
 
 		void CommandSetup()
         {
-			AddMarshalCommand = new RelayCommand(
-				() => SelectedRank=Rank.Marshal,
-				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
+            AddMarshalCommand = new RelayCommand(
+				() => SelectMarshal(),
+				() => !Pieces.Any(piece => piece.Character.RankPower == 9)
 				);
-			AddGeneralCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.General, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column)),
+            AddGeneralCommand = new RelayCommand(
+                () => SelectGeneral(),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 9)
 				); 
 			AddColonelCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Colonel, actualTeam), 1, 1)),
+                () => SelectColonel(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 8) <= 2
 				); 
 			AddMajorCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Major, actualTeam), 1, 1)),
+                () => SelectMajor(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 7) <= 3
 				); 
 			AddCaptainCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Captain, actualTeam), 1, 1)),
+                () => SelectCaptain(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 6) <= 4
 				); 
 			AddLieutenantCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Lieutenant, actualTeam),1,1)),
+                () => SelectLieutenant(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 5) <=4
 				); 
 			AddSergeantCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Sergeant, actualTeam),1,1)),
+                () => SelectSergeant(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 4) <=4
 				);
 			AddMinerCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Miner, actualTeam), 1, 1)),
+                () => SelectMiner(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 3)<=5
 				);
 			AddScoutCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Scout, actualTeam), 1, 1)),
+                () => SelectScout(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 2)<=8
 				);
 			AddSpyCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Spy, actualTeam), 1, 1)),
+                () => SelectSpy(),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 1)
 				);
 			AddMineCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Mine, actualTeam), 1, 1)),
+                () => SelectMine(),
 				() => Pieces.Count(piece => piece.Character.RankPower == 11)<=6
 				);
 			AddFlagCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Flag, actualTeam), 1, 1)),
+                () => SelectFlag(),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
 				);
 		}
@@ -155,5 +162,76 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
+
+		//God forgive me for i have sinned (i do not feel proud of this)
+		private void SelectMarshal()
+		{
+			SelectedRank = Rank.Marshal;
+			RankSelectionEvent?.Invoke(this, null);
+		}
+        private void SelectGeneral()
+        {
+            SelectedRank = Rank.General;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectColonel()
+        {
+            SelectedRank = Rank.Colonel;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectMajor()
+        {
+            SelectedRank = Rank.Major;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectCaptain()
+        {
+            SelectedRank = Rank.Captain;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectLieutenant()
+        {
+            SelectedRank = Rank.Lieutenant;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectSergeant()
+        {
+            SelectedRank = Rank.Sergeant;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectMiner()
+        {
+            SelectedRank = Rank.Miner;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectScout()
+        {
+            SelectedRank = Rank.Scout;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectSpy()
+        {
+            SelectedRank = Rank.Spy;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectMine()
+        {
+            SelectedRank = Rank.Mine;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+        private void SelectFlag()
+        {
+            SelectedRank = Rank.Flag;
+            RankSelectionEvent?.Invoke(this, null);
+        }
+
+		//Changes initialPlacement to True (finished placing down the pieces)
+		private void Ready()
+		{
+			initialPlacement = false;
+			var a = Pieces;
+            ReadyEvent?.Invoke(this, null);
+        }
+
     }
 }
