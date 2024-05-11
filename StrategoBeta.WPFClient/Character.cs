@@ -9,11 +9,11 @@ namespace StrategoBeta.Models
 {
     public enum Rank
     {
-        Flag = 0, Spy = 1, Scout = 2, Miner = 3, Sergeant = 4, Lieutenant = 5, Captain = 6, Major = 7, Colonel = 8, General = 9, Marshal = 10, Mine = 11
+        Flag = 0, Spy = 1, Scout = 2, Miner = 3, Sergeant = 4, Lieutenant = 5, Captain = 6, Major = 7, Colonel = 8, General = 9, Marshal = 10, Mine = 11, Empty = 12
     }
     public enum Team
     {
-        Blue, Red
+        Blue, Red, Empty
     }
     public class Character
     {
