@@ -23,6 +23,7 @@ namespace StrategoBeta.WPFClient
         BlueWindow blueWindow;
         RedWindow redWindow;
         Team actualTeam;
+		bool canPlacePiece;
 		SelectedGridCell selectedgridcell;
 		public SelectedGridCell SelectedGridCell
 		{
@@ -30,10 +31,8 @@ namespace StrategoBeta.WPFClient
 			set 
 			{ 
 				SetProperty(ref selectedgridcell, value);
-
 			}
 		}
-
 		//side bar Command for placing piecies
         public ICommand AddMarshalCommand { get; set; }
 		public ICommand AddGeneralCommand { get; set; }
@@ -55,6 +54,7 @@ namespace StrategoBeta.WPFClient
         }
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
         {	Pieces = new ObservableCollection<Piece>();
+			actualTeam = Team.Blue;
 			blueWindow = bluewindow;
             redWindow= redwindow;
 			CommandSetup();
@@ -68,12 +68,11 @@ namespace StrategoBeta.WPFClient
             //        }
             //    }
             //}
-           
         }
         void CommandSetup()
         {
 			AddMarshalCommand = new RelayCommand(
-				() => Pieces.Add(new Piece(new Character(Rank.Marshal, actualTeam), 1, 1)),
+				() => Pieces.Add(new Piece(new Character(Rank.Marshal, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column)),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
 				);
 			AddGeneralCommand = new RelayCommand(
