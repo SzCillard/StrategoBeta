@@ -19,6 +19,7 @@ namespace StrategoBeta.WPFClient
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
-	}
+            DataContext = new MainWindowViewModel();
+        }
+    }
 }

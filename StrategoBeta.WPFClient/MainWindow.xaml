@@ -6,37 +6,11 @@
         xmlns:local="clr-namespace:StrategoBeta.WPFClient"
         mc:Ignorable="d"
        Title="Stratego (BLUE)" Height="850" Width="1000">
+
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        <FontFamily x:Key="BLKCHCRYFont" >/Assets/BLKCHCRY.TTF#BLKCHCRY</FontFamily>
-        <Style x:Key="ImportantText" TargetType="Label">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource BLKCHCRYFont}"/>
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style x:Key="EndTurnButton" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="Times New Roman"/>
-            <Setter Property="FontStyle" Value="Italic"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Padding" Value="10"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Background" >
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
-                        <GradientStop Color="#FFFFD190" Offset="0.2"/>
-                        <GradientStop Color="Orange" Offset="0.85"/>
-                        <GradientStop Color="#FFFFD190" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style x:Key="BlueCharacterButton" TargetType="Button">
             <Setter Property="BorderBrush" Value="DarkBlue"/>
             <Setter Property="BorderThickness" Value="5,5,5,5"/>
@@ -44,9 +18,9 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border x:Name="Border"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         Background="{TemplateBinding Background}"   >
+                          BorderBrush="{TemplateBinding BorderBrush}"
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          Background="{TemplateBinding Background}"   >
                             <ContentPresenter RecognizesAccessKey="True" />
                         </Border>
                     </ControlTemplate>
@@ -59,247 +33,68 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="RedCharacterButton" TargetType="Button">
-            <Setter Property="BorderBrush" Value="DarkRed"/>
-            <Setter Property="BorderThickness" Value="5,5,5,5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="Border"
-                         BorderBrush="{TemplateBinding BorderBrush}"
-                         BorderThickness="{TemplateBinding BorderThickness}"
-                         Background="{TemplateBinding Background}"   >
-                            <ContentPresenter RecognizesAccessKey="True" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Pink"/>
-                    <Setter Property="BorderThickness" Value="5,0,0,5"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="HiddenButton" TargetType="Button">
-            <Setter Property="Visibility" Value="Visible"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="False">
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
     </Window.Resources>
-    <Grid RenderTransformOrigin="1,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="429*"/>
-            <ColumnDefinition Width="71*"/>
-        </Grid.ColumnDefinitions>
-        <Grid x:Name="playingField" Grid.Column="0" HorizontalAlignment="Right" Width="859">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50*"/>
-                <RowDefinition Height="66*"/>
-                <RowDefinition Height="71*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="71*"/>
-                <RowDefinition Height="73*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="73*"/>
-                <RowDefinition Height="75*"/>
-                <RowDefinition Height="71*"/>
-                <RowDefinition Height="47*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="53*"/>
-                <ColumnDefinition Width="78*"/>
-                <ColumnDefinition Width="73*"/>
-                <ColumnDefinition Width="76*"/>
-                <ColumnDefinition Width="78*"/>
-                <ColumnDefinition Width="75*"/>
-                <ColumnDefinition Width="72*"/>
-                <ColumnDefinition Width="78*"/>
-                <ColumnDefinition Width="73*"/>
-                <ColumnDefinition Width="76*"/>
-                <ColumnDefinition Width="76*"/>
-                <ColumnDefinition Width="52*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="1" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="2" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="3" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="4" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="5" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="6" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="7" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="8" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="9" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="1" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="2" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="3" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="4" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="5" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="6" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="7" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="8" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="9" Style="{StaticResource HiddenButton}"/>
-            <Button Grid.Row="10" Grid.Column="10" Style="{StaticResource HiddenButton}"/>
-        </Grid>
-        <StackPanel Grid.Column="1" Background="BurlyWood">
-            <Label Content="{Binding RemainingTime}" ContentStringFormat="Time left: {0} s" Style="{StaticResource ImportantText}"/>
-            <Label Content="Place a character" FontSize="18" FontWeight="Bold" FontStyle="Italic" FontFamily="Times New Roman"/>
 
-            <Label Content="{Binding SelectedPiece.Rank}" FontSize="18" FontWeight="Bold" FontStyle="Italic" FontFamily="Times New Roman"/>
+    <Grid Margin="10" Background="Black">
+        <Grid.Resources>
 
-            <StackPanel>
-                <Grid Margin="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <!-- Need to add Click="" to buttons-->
-                    <Button Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal">
-                        <Image Source="Images/bluePiece1.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="0" Grid.Column="1" Margin="2" Tag="General">
-                        <Image Source="Images/bluePiece2.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel">
-                        <Image Source="Images/bluePiece3.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major">
-                        <Image Source="Images/bluePiece4.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain">
-                        <Image Source="Images/bluePiece5.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant">
-                        <Image Source="Images/bluePiece6.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant">
-                        <Image Source="Images/bluePiece7.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner">
-                        <Image Source="Images/bluePiece8.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout">
-                        <Image Source="Images/bluePiece9.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy">
-                        <Image Source="Images/bluePiece10.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine">
-                        <Image Source="Images/blue_bomb.png" Stretch="Fill"/>
-                    </Button>
-                    <Button Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag">
-                        <Image Source="Images/blueFlag.png" Stretch="Fill"/>
-                    </Button>
-                </Grid>
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Button Content="Ready" Grid.Row="0" Style="{StaticResource EndTurnButton}" Command="{Binding Start}"/>
-                    <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurn}"/>
-                </Grid>
+            <!-- This template presents the Piece object.  Note that you can't set
+                 the Grid.Row and Grid.Column properties on this Rectangle - well,
+                 you *can*, but the Grid won't see them.  See the Style below.  -->
+            <DataTemplate DataType="{x:Type local:Piece}">
+                <Button Style="{StaticResource BlueCharacterButton}"/>
+            </DataTemplate>
 
-            </StackPanel>
-        </StackPanel>
+            <!-- When the ItemsControl creates its items, it wraps each item in a
+                 ContentPresenter.  You have to set Grid.Row and Grid.Column
+                 on this ContentPresenter in order for the Grid to see them. -->
+            <Style TargetType="{x:Type ContentPresenter}">
+                <Setter Property="Grid.Row"
+                        Value="{Binding Row}" />
+                <Setter Property="Grid.Column"
+                        Value="{Binding Column}" />
+            </Style>
 
-        <Grid.Background>
-            <ImageBrush ImageSource="Images/background.png" Stretch="None" AlignmentX="Left"/>
-        </Grid.Background>
+        </Grid.Resources>
+        <Border BorderBrush="Black"
+                BorderThickness="1">
+            <ItemsControl x:Name="Board"
+                          ItemsSource="{Binding Pieces}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30*" />
+                                <RowDefinition Height="78*" />
+                                <RowDefinition Height="75*" />
+                                <RowDefinition Height="69*" />
+                                <RowDefinition Height="78*" />
+                                <RowDefinition Height="70*" />
+                                <RowDefinition Height="71*" />
+                                <RowDefinition Height="76*" />
+                                <RowDefinition Height="78*" />
+                                <RowDefinition Height="75*" />
+                                <RowDefinition Height="75*" />
+                                <RowDefinition Height="36*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="46*" />
+                                <ColumnDefinition Width="84*" />
+                                <ColumnDefinition Width="78*" />
+                                <ColumnDefinition Width="73*" />
+                                <ColumnDefinition Width="74*" />
+                                <ColumnDefinition Width="81*" />
+                                <ColumnDefinition Width="73*" />
+                                <ColumnDefinition Width="67*" />
+                                <ColumnDefinition Width="78*" />
+                                <ColumnDefinition Width="72*" />
+                                <ColumnDefinition Width="78*" />
+                                <ColumnDefinition Width="173*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Border>
     </Grid>
 </Window>
