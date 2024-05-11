@@ -47,18 +47,16 @@ namespace StrategoBeta.WPFClient
 		public ICommand AddMineCommand { get; set; }
 		public ICommand AddFlagCommand { get; set; }
 
-		public ObservableCollection<Piece> Pieces { set; get; } 
+		public ObservableCollection<Piece> Pieces { set; get; } = new ObservableCollection<Piece>();
         public MainWindowViewModel()
         {
-            
+            FillWithEmptyButtons();
         }
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
         {
-			Pieces = new ObservableCollection<Piece>();
             actualTeam = Team.Blue;
 			blueWindow = bluewindow;
             redWindow= redwindow;
-            FillWithEmptyButtons();
             CommandSetup();
         }
         void CommandSetup()

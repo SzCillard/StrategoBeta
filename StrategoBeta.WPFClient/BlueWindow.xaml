@@ -40,6 +40,7 @@
         <Style x:Key="BlueCharacterButton" TargetType="Button">
             <Setter Property="BorderBrush" Value="DarkBlue"/>
             <Setter Property="BorderThickness" Value="5,5,5,5"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -64,7 +65,7 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="BorderBrush" Value="DarkRed"/>
             <Setter Property="BorderThickness" Value="5,0,0,5"/>
-            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -98,16 +99,16 @@
         </Style>
 
     </Window.Resources>
-    <Grid>
+    <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="10" Background="Black">
+        <Grid x:Name="playingField" Grid.Column="0" Background="BurlyWood" Margin="0,0,10,0">
             <Grid.Resources>
                 
                 <DataTemplate DataType="{x:Type local:Piece}">
-                    <Button Style="{StaticResource BlueCharacterButton}"/>
+                    <Button Style="{StaticResource HiddenButton}"/>
                 </DataTemplate>
 
                 <Style TargetType="{x:Type ContentPresenter}">
