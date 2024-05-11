@@ -105,17 +105,11 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="10" Background="Black">
             <Grid.Resources>
-
-                <!-- This template presents the Piece object.  Note that you can't set
-          the Grid.Row and Grid.Column properties on this Rectangle - well,
-          you *can*, but the Grid won't see them.  See the Style below.  -->
+                
                 <DataTemplate DataType="{x:Type local:Piece}">
                     <Button Style="{StaticResource BlueCharacterButton}"/>
                 </DataTemplate>
 
-                <!-- When the ItemsControl creates its items, it wraps each item in a
-          ContentPresenter.  You have to set Grid.Row and Grid.Column
-          on this ContentPresenter in order for the Grid to see them. -->
                 <Style TargetType="{x:Type ContentPresenter}">
                     <Setter Property="Grid.Row"
                  Value="{Binding Row}" />

@@ -53,21 +53,13 @@ namespace StrategoBeta.WPFClient
             
         }
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
-        {	Pieces = new ObservableCollection<Piece>();
-			actualTeam = Team.Blue;
+        {
+			Pieces = new ObservableCollection<Piece>();
+            actualTeam = Team.Blue;
 			blueWindow = bluewindow;
             redWindow= redwindow;
-			CommandSetup();
-            //for (int i = 0; i < 12; i++)
-            //{
-            //    for (int j = 0; j < 12; j++)
-            //    {
-            //        if (i >= 1 && i < 11 && j >= 1 && j < 11)
-            //        {
-            //            Pieces.Add(new Piece() {Column = i, Row = j, Character = new Character(0,Team.Blue) });
-            //        }
-            //    }
-            //}
+            FillWithEmptyButtons();
+            CommandSetup();
         }
         void CommandSetup()
         {
@@ -124,5 +116,18 @@ namespace StrategoBeta.WPFClient
 		{ }
 		void Battle()
 		{ }
+		void FillWithEmptyButtons()
+		{
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    if (i >= 1 && i < 11 && j >= 1 && j < 11)
+                    {
+                        Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty), i, j));
+                    }
+                }
+            }
+        }
     }
 }
