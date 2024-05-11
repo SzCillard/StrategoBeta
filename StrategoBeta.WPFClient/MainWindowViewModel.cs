@@ -23,7 +23,7 @@ namespace StrategoBeta.WPFClient
         BlueWindow blueWindow;
         RedWindow redWindow;
         Team actualTeam;
-		bool canPlacePiece;
+		bool initialPlacement;
 		SelectedGridCell selectedgridcell;
 		public SelectedGridCell SelectedGridCell
 		{
@@ -76,12 +76,14 @@ namespace StrategoBeta.WPFClient
 			int row = e.Row;
 			int column = e.Column;
 			Button button = e.button;
-			if(canPlacePiece)
+			if(initialPlacement)
 			{
 				Pieces.Add(new Piece(new Character(Rank.Marshal, Team.Blue), row, column));
 			}
 			else 
-			{ }
+			{
+				
+			}
 		}
 
 		void CommandSetup()
@@ -141,6 +143,7 @@ namespace StrategoBeta.WPFClient
 		{ }
 		void FillWithEmptyButtons()
 		{
+			//Fills the Pieces collection with buttons so they show up in the window.
             for (int i = 0; i < 12; i++)
             {
                 for (int j = 0; j < 12; j++)
