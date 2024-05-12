@@ -30,9 +30,9 @@ namespace StrategoBeta.WPFClient
 		public bool InitialPlacement { get; set; } = true;
 		bool placed = true;
 		bool ReadyToPlace = false;
-		int idx;
-		int selectedRow;
-		int selectedColumn;
+		int actualSelectedidx;
+		int actualSelectedRow;
+		int actualSelectedColumn;
 		int oldRow;
 		int oldCol;
 		Rank selectedRank;
@@ -256,6 +256,7 @@ namespace StrategoBeta.WPFClient
 				else
 				{
 					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+
 				}
 
 		}
