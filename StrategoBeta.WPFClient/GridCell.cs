@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace StrategoBeta.WPFClient
 {
-	internal class SelectedGridCell
+	internal class CustomGridCell
 	{
-		public SelectedGridCell(int row, int column)
+		public CustomGridCell(int row, int column)
 		{
 			Row = row;
 			Column = column;

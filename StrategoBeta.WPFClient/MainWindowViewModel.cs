@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,10 @@ namespace StrategoBeta.WPFClient
 		Team actualTeam;
 		public bool InitialPlacement { get; set; } = true;
 		bool placed = true;
-		SelectedGridCell selectedgridcell;
-		public SelectedGridCell SelectedGridCell
+		bool ReadyToPlace;
+		int idx;
+		CustomGridCell selectedgridcell;
+		public CustomGridCell SelectedGridCell
 		{
 			get { return selectedgridcell; }
 			set
@@ -88,26 +91,29 @@ namespace StrategoBeta.WPFClient
 			// Handle the button click event here
 			int row = e.Row;
 			int column = e.Column;
-			var idx = (10 * (row - 1) + column) - 1;
 			Button button = e.button;
 			if (InitialPlacement && !placed)
 			{
-				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
+				var index = (10 * (row - 1) + column) - 1;
+				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
 				button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
-                AddPicture(Pieces[idx], button);
+                AddPicture(Pieces[index], button);
             }
 			else 
 			{
-				if (!placed)
-				{
-					PieceMoving(idx);
-				}
-				else
+				if (ReadyToPlace)
 				{
 					SelectedGridCell.Row = row;
 					SelectedGridCell.Column = column;
+					PieceMoving();
+				}
+				else
+				{
+					idx = (10 * (row - 1) + column) - 1;
+					SelectedRank = Pieces[idx].Character.Rank;
+					ReadyToPlace = true;
 				}
 			}
 		}
@@ -163,12 +169,40 @@ namespace StrategoBeta.WPFClient
 				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
 				);
 		}
-		void PieceMoving(int idx)
+		void PieceMoving()
 		{
 			bool gridIsEmpty = Pieces[idx].Character.Rank == Rank.Empty;
 			if (gridIsEmpty)
 			{
-				Pieces[idx]=
+				Pieces[idx] = new Piece(new Character(SelectedRank, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column);
+			}
+			else
+			{
+				var index = (10 * (SelectedGridCell.Row- 1) + SelectedGridCell.Column) - 1;
+				bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
+				if (actualTeam is Team.Blue)
+				{
+
+					if (IsPieceFriendly) 
+					{ 
+						
+					}
+					else
+					{
+						Battle();
+					}
+				}
+				else
+				{
+					if(IsPieceFriendly)
+					{ 
+					
+					}
+					else 
+					{
+						Battle();
+					}
+				}
 			}
 		}
 		void Battle()
