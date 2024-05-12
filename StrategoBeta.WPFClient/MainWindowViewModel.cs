@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.VisualBasic;
 using StrategoBeta.Models;
 using System;
 using System.Collections;
@@ -85,13 +86,15 @@ namespace StrategoBeta.WPFClient
 			// Handle the button click event here
 			int row = e.Row;
 			int column = e.Column;
+			//Calculates the index of the collection
+			int idx = (10*(row-1) + column)-1;
 			Button button = e.button;
-			if(initialPlacement)
+            if (initialPlacement)
 			{
 				/////////////////////////////////////////////////////
 				//TODO: Selected rank stuck on FLAG and no clue why//
 				/////////////////////////////////////////////////////
-				Pieces.Add(new Piece(new Character(SelectedRank, Team.Blue), row, column));
+				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 			}
 			else 
 			{
