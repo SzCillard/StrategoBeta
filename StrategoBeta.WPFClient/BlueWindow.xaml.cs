@@ -1,6 +1,7 @@
 ﻿using StrategoBeta.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,7 @@ namespace StrategoBeta.WPFClient
 
 		private void SubscribeToButtonClickEvents()
 		{
-			foreach (var button in playingField.Children.OfType<Button>())
+            foreach (var button in playingField.Children.OfType<Button>())
 			{
 				button.Click += Field_Click;
 			}
@@ -55,9 +56,11 @@ namespace StrategoBeta.WPFClient
 
 		private void Field_Click(object sender, RoutedEventArgs e)
 		{
-			Button button= sender as Button;
-			row = Grid.GetRow(button);
-			column = Grid.GetColumn(button);
+			//Gets the clicked buttons row and column from the DataCotext and sends it to the ViewModel
+			Button button = sender as Button;
+            Piece currentPiece = button.DataContext as Piece;
+            row = currentPiece.Row;
+			column = currentPiece.Column;
 			ButtonClickedEvent?.Invoke(this, new ButtonClickedEventArgs(row, column,button));
 		}
 	}

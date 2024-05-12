@@ -108,7 +108,7 @@
             <Grid.Resources>
                 
                 <DataTemplate DataType="{x:Type local:Piece}">
-                    <Button Style="{StaticResource HiddenButton}"/>
+                    <Button Style="{StaticResource HiddenButton}" Click="Field_Click"/>
                 </DataTemplate>
 
                 <Style TargetType="{x:Type ContentPresenter}">
@@ -180,7 +180,7 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding MarshalCommand}">
+                    <Button Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}">
                         <Image Source="Images/bluePiece1.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}">
@@ -223,7 +223,7 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Button Content="Ready" Grid.Row="0" Style="{StaticResource EndTurnButton}" Command="{Binding Ready}"/>
+                    <Button Content="Ready" Grid.Row="0" Style="{StaticResource EndTurnButton}" Command="{Binding ReadyCommand}"/>
                     <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurn}"/>
                 </Grid>
             </StackPanel>
