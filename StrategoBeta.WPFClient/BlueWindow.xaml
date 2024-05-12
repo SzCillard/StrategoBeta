@@ -61,10 +61,8 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="RedCharacterButton" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="BorderBrush" Value="DarkRed"/>
-            <Setter Property="BorderThickness" Value="5,0,0,5"/>
+            <Setter Property="BorderThickness" Value="5,5,5,5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -73,18 +71,15 @@
                       BorderBrush="{TemplateBinding BorderBrush}"
                       BorderThickness="{TemplateBinding BorderThickness}"
                       Background="{TemplateBinding Background}"   >
-                            <ContentPresenter Margin="20"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      RecognizesAccessKey="True" />
+                            <ContentPresenter RecognizesAccessKey="True" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Pink"/>
-                    <Setter Property="BorderThickness" Value="5,0,0,5"/>
+                    <Setter Property="BorderBrush" Value="LightPink"/>
+                    <Setter Property="BorderThickness" Value="5,5,5,5"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -94,9 +89,8 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
             <Setter Property="Margin" Value="5"/>
-            
-        </Style>
 
+        </Style>
     </Window.Resources>
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
@@ -179,41 +173,90 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}">
-                        <Image Source="Images/bluePiece1.png" Stretch="Fill"/>
+
+                    <Button x:Name="buttonMarshal" Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece1.png" Name="buttonMarshalIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}">
-                        <Image Source="Images/bluePiece2.png" Stretch="Fill"/>
+                    <Button x:Name="buttonGeneral" Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece2.png" Name="buttonGeneralIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel" Command="{Binding AddColonelCommand}">
-                        <Image Source="Images/bluePiece3.png" Stretch="Fill"/>
+                    <Button x:Name="buttonColonel" Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel" Command="{Binding AddColonelCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece3.png" Name="buttonColonelIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major" Command="{Binding AddMajorCommand}">
-                        <Image Source="Images/bluePiece4.png" Stretch="Fill"/>
+                    <Button x:Name="buttonMajor" Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major" Command="{Binding AddMajorCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece4.png" Name="buttonMajorIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain" Command="{Binding AddCaptainCommand}">
-                        <Image Source="Images/bluePiece5.png" Stretch="Fill"/>
+                    <Button x:Name="buttonCaptain" Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain" Command="{Binding AddCaptainCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece5.png" Name="buttonCaptainIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant" Command="{Binding AddLieutenantCommand}">
-                        <Image Source="Images/bluePiece6.png" Stretch="Fill"/>
+                    <Button x:Name="buttonLieutenant" Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant" Command="{Binding AddLieutenantCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece6.png" Name="buttonLieutenantIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant" Command="{Binding AddSergeantCommand}">
-                        <Image Source="Images/bluePiece7.png" Stretch="Fill"/>
+                    <Button x:Name="buttonSergeant" Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant" Command="{Binding AddSergeantCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece7.png" Name="buttonSergeantIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner" Command="{Binding AddMinerCommand}">
-                        <Image Source="Images/bluePiece8.png" Stretch="Fill"/>
+                    <Button x:Name="buttonMiner" Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner" Command="{Binding AddMinerCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece8.png" Name="buttonMinerIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout" Command="{Binding AddScoutCommand}">
-                        <Image Source="Images/bluePiece9.png" Stretch="Fill"/>
+                    <Button x:Name="buttonScout" Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout" Command="{Binding AddScoutCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece9.png" Name="buttonScoutIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy" Command="{Binding AddSpyCommand}">
-                        <Image Source="Images/bluePiece10.png" Stretch="Fill"/>
+                    <Button x:Name="buttonSpy" Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy" Command="{Binding AddSpyCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/bluePiece10.png" Name="buttonSpyIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine" Command="{Binding AddMineCommand}">
-                        <Image Source="Images/blue_bomb.png" Stretch="Fill"/>
+                    <Button x:Name="buttonMine" Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine" Command="{Binding AddMineCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/blue_bomb.png" Name="buttonMineIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
-                    <Button Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag" Command="{Binding AddFlagCommand}">
-                        <Image Source="Images/blueFlag.png" Stretch="Fill"/>
+                    <Button x:Name="buttonFlag" Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag" Command="{Binding AddFlagCommand}" Click="ChangeMenu_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="Images/blueFlag.png" Name="buttonFlagIMG" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                 </Grid>
                 <Grid Margin="10">

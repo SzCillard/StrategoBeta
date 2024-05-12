@@ -25,7 +25,6 @@ namespace StrategoBeta.WPFClient
     internal class MainWindowViewModel : ObservableRecipient
     {
         BlueWindow blueWindow;
-        RedWindow redWindow;
         Team actualTeam;
         bool first = true;
         public bool InitialPlacement { get; set; } = true;
@@ -67,7 +66,7 @@ namespace StrategoBeta.WPFClient
         {
 
         }
-        public MainWindowViewModel(BlueWindow bluewindow, RedWindow redwindow)
+        public MainWindowViewModel(BlueWindow bluewindow)
         {
             FillWithEmptyButtons();
             CommandSetup();
@@ -76,72 +75,6 @@ namespace StrategoBeta.WPFClient
             blueWindow.Show();
             blueWindow.DataContext = this;
             blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
-            redWindow = redwindow;
-            redWindow.DataContext = this;
-            redwindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
-        }
-
-        //Manages red window
-        private void ClickOnPlayingFieldEvent(object? sender, RedWindow.ButtonClickedEventArgs e)
-        {
-            // Gets the row and column of the button that was clicked
-            int row = e.Row;
-            int column = e.Column;
-            Button button = e.button;
-
-            //Only while pieces are being placed
-            if (InitialPlacement && !placed)
-            {
-                var index = (10 * (row - 1) + column) - 1;
-                Pieces[index] = new Piece(new Character(SelectedRank, Team.Red), row, column);
-                placed = true;
-                SelectedRank = Rank.Empty;
-                SetStyle(button, Team.Red);
-                AddPicture(Pieces[index], button, Team.Red);
-            }
-            else
-            {
-                //Movement
-                if (ReadyToPlace)
-                {
-                    //Sets the value of the variables to the position where the piece will move
-                    actualSelectedRow = row;
-                    actualSelectedColumn = column;
-
-                    //Calculates the place where the piece will move
-                    int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
-
-                    //Calculates if a piece can move according to it's maximum step
-                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldCol, actualSelectedColumn, oldRow, actualSelectedRow))
-                    {
-                        PieceMoving(button, selectedIdx);
-                        ReadyToPlace = false;
-                    }
-                }
-                else
-                {
-                    //Sets the value of the variables to the position where the piece moved from
-                    oldRow = row;
-                    oldCol = column;
-
-                    //Calculates the index of the place where the piece was
-                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
-
-                    //Selects the piece that will be moved
-                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
-                    if (SelectedRank == Rank.Empty)
-                    {
-
-                    }
-                    else
-                    {
-                        //Sets the style for the button in the old position
-                        SetStyle(button, Team.Empty);
-                        button.Background = null;
-                        ReadyToPlace = true;
-                    }
-                }
-            }
         }
         //Manages blue window
         private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
@@ -155,11 +88,11 @@ namespace StrategoBeta.WPFClient
             if (InitialPlacement && !placed)
             {
                 var index = (10 * (row - 1) + column) - 1;
-                Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
+                Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
                 placed = true;
                 SelectedRank = Rank.Empty;
-                SetStyle(button, Team.Blue);
-                AddPicture(Pieces[index], button, Team.Blue);
+                SetStyle(button, actualTeam);
+                AddPicture(Pieces[index], button, actualTeam);
             }
             else
             {
@@ -401,6 +334,27 @@ namespace StrategoBeta.WPFClient
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
         }
+        private void EndTurn()
+        {
+            if (actualTeam is Team.Blue)
+            {
+                actualTeam = Team.Red;
+                blueWindow.Title = "Red";
+                if (first)
+                {
+                    InitialPlacement = true;
+                    placed = false;
+                    ReadyToPlace = false;
+                    first = false;
+                    selectedRank = Rank.Empty;
+                }
+            }
+            else
+            {
+                actualTeam = Team.Blue;
+                blueWindow.Title = "Blue";
+            }
+        }
         public void AddPicture(Piece piece, Button button, Team team)
         {
             if (team == Team.Blue)
@@ -497,34 +451,11 @@ namespace StrategoBeta.WPFClient
             }
             else if (team == Team.Red)
             {
-                button.Style = redWindow.FindResource("RedCharacterButton") as Style;
+                button.Style = blueWindow.FindResource("RedCharacterButton") as Style;
             }
             else
             {
-                button.Style = redWindow.FindResource("HiddenButton") as Style;
-            }
-        }
-        void EndTurn()
-        {
-            if (actualTeam is Team.Blue)
-            {
-                actualTeam = Team.Red;
-                blueWindow.Visibility = Visibility.Hidden;
-                redWindow.Show();
-                if (first)
-                {
-                    InitialPlacement = true;
-                    placed = false;
-                    ReadyToPlace = false;
-                    first = false;
-                    selectedRank = Rank.Empty;
-                }
-            }
-            else
-            {
-                actualTeam = Team.Blue;
-                redWindow.Visibility = Visibility.Hidden;
-                blueWindow.Show();
+                button.Style = blueWindow.FindResource("HiddenButton") as Style;
             }
         }
         private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int actualSelectedRow)

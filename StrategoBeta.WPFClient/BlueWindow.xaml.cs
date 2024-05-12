@@ -70,5 +70,109 @@ namespace StrategoBeta.WPFClient
         {
             viewModel = this.DataContext as MainWindowViewModel;
         }
+
+        private void ChangeMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (Title == "Red")
+            {
+                ControlTemplate ct = buttonFlag.Template;
+                Image btnImage = (Image)ct.FindName("buttonFlagIMG", buttonFlag);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redFlag.png", UriKind.Relative));
+
+                ct = buttonSpy.Template;
+                btnImage = (Image)ct.FindName("buttonSpyIMG", buttonSpy);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece9.png", UriKind.Relative));
+
+                ct = buttonScout.Template;
+                btnImage = (Image)ct.FindName("buttonScoutIMG", buttonScout);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece9.png", UriKind.Relative));
+
+                ct = buttonMiner.Template;
+                btnImage = (Image)ct.FindName("buttonMinerIMG", buttonMiner);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece8.png", UriKind.Relative));
+
+                ct = buttonSergeant.Template;
+                btnImage = (Image)ct.FindName("buttonSergeantIMG", buttonSergeant);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece7.png", UriKind.Relative));
+
+                ct = buttonLieutenant.Template;
+                btnImage = (Image)ct.FindName("buttonLieutenantIMG", buttonLieutenant);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece6.png", UriKind.Relative));
+
+                ct = buttonCaptain.Template;
+                btnImage = (Image)ct.FindName("buttonCaptainIMG", buttonCaptain);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece5.png", UriKind.Relative));
+
+                ct = buttonMajor.Template;
+                btnImage = (Image)ct.FindName("buttonMajorIMG", buttonMajor);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece4.png", UriKind.Relative));
+
+                ct = buttonColonel.Template;
+                btnImage = (Image)ct.FindName("buttonColonelIMG", buttonColonel);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece3.png", UriKind.Relative));
+
+                ct = buttonGeneral.Template;
+                btnImage = (Image)ct.FindName("buttonGeneralIMG", buttonGeneral);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece2.png", UriKind.Relative));
+
+                ct = buttonMarshal.Template;
+                btnImage = (Image)ct.FindName("buttonMarshalIMG", buttonMarshal);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece1.png", UriKind.Relative));
+
+                ct = buttonMine.Template;
+                btnImage = (Image)ct.FindName("buttonMineIMG", buttonMine);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/red_bomb.png", UriKind.Relative));
+            }
+            else if (Title == "Blue")
+            {
+                ControlTemplate ct = buttonFlag.Template;
+                Image btnImage = (Image)ct.FindName("buttonFlagIMG", buttonFlag);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/blueFlag.png", UriKind.Relative));
+
+                ct = buttonSpy.Template;
+                btnImage = (Image)ct.FindName("buttonSpyIMG", buttonSpy);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative));
+
+                ct = buttonScout.Template;
+                btnImage = (Image)ct.FindName("buttonScoutIMG", buttonScout);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative));
+
+                ct = buttonMiner.Template;
+                btnImage = (Image)ct.FindName("buttonMinerIMG", buttonMiner);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece8.png", UriKind.Relative));
+
+                ct = buttonSergeant.Template;
+                btnImage = (Image)ct.FindName("buttonSergeantIMG", buttonSergeant);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece7.png", UriKind.Relative));
+
+                ct = buttonLieutenant.Template;
+                btnImage = (Image)ct.FindName("buttonLieutenantIMG", buttonLieutenant);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece6.png", UriKind.Relative));
+
+                ct = buttonCaptain.Template;
+                btnImage = (Image)ct.FindName("buttonCaptainIMG", buttonCaptain);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece5.png", UriKind.Relative));
+
+                ct = buttonMajor.Template;
+                btnImage = (Image)ct.FindName("buttonMajorIMG", buttonMajor);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece4.png", UriKind.Relative));
+
+                ct = buttonColonel.Template;
+                btnImage = (Image)ct.FindName("buttonColonelIMG", buttonColonel);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece3.png", UriKind.Relative));
+
+                ct = buttonGeneral.Template;
+                btnImage = (Image)ct.FindName("buttonGeneralIMG", buttonGeneral);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece2.png", UriKind.Relative));
+
+                ct = buttonMarshal.Template;
+                btnImage = (Image)ct.FindName("buttonMarshalIMG", buttonMarshal);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece1.png", UriKind.Relative));
+
+                ct = buttonMine.Template;
+                btnImage = (Image)ct.FindName("buttonMineIMG", buttonMine);
+                btnImage.Source = new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative));
+            }
+        }
     }
 }

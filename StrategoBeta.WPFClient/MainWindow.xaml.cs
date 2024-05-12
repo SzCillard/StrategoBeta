@@ -25,7 +25,7 @@ namespace StrategoBeta.WPFClient
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			viewModel = new MainWindowViewModel(new BlueWindow(), new RedWindow());
+			viewModel = new MainWindowViewModel(new BlueWindow());
 			this.Close();
 		}
 
