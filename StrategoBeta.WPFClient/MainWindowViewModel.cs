@@ -64,7 +64,6 @@ namespace StrategoBeta.WPFClient
 		public ObservableCollection<Piece> Pieces { set; get; } = new ObservableCollection<Piece>();
 		public MainWindowViewModel()
 		{
-			//(már javitott)Négyszer fut le a konstruktor, egyszer amikor a MainWindowban letrehozza, majd egyszer-egyszer a blue és red window konstruktora miatt
 
 		}
 		public MainWindowViewModel(BlueWindow bluewindow, RedWindow redwindow)
@@ -244,9 +243,7 @@ namespace StrategoBeta.WPFClient
 			}
 		}
 		void Battle(Piece attacker, Piece defender, Button button)
-		{
-			if (attacker.Character.Team is Team.Blue)
-			{
+		{	
 				if (attacker.Character.RankPower<defender.Character.RankPower)
 				{
 					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), selectedRow, selectedColumn);
@@ -260,22 +257,6 @@ namespace StrategoBeta.WPFClient
 				{
 					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
 				}
-			}
-			else
-			{
-				if (attacker.Character.RankPower < defender.Character.RankPower)
-				{
-
-				}
-				else if (attacker.Character.RankPower > defender.Character.RankPower)
-				{
-
-				}
-				else
-				{
-
-				}
-			}
 
 		}
 		void FillWithEmptyButtons()
