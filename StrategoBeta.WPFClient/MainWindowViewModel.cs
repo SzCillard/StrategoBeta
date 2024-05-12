@@ -110,10 +110,17 @@ namespace StrategoBeta.WPFClient
 				{
 					idx = (10 * (row - 1) + column) - 1;
 					SelectedRank = Pieces[idx].Character.Rank;
-					ReadyToPlace = true;
-                    Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), row, column);
-                    button.Style = blueWindow.FindResource("HiddenButton") as Style;
-					button.Background = null;
+					if (SelectedRank == Rank.Empty)
+					{
+
+					}
+					else
+					{
+                        ReadyToPlace = true;
+                        Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), row, column);
+                        button.Style = blueWindow.FindResource("HiddenButton") as Style;
+                        button.Background = null;
+                    }
                 }
 			}
 		}
