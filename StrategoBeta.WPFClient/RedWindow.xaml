@@ -61,10 +61,8 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="RedCharacterButton" TargetType="Button">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="BorderBrush" Value="DarkRed"/>
-            <Setter Property="BorderThickness" Value="5,0,0,5"/>
+            <Setter Property="BorderThickness" Value="5,5,5,5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -73,18 +71,15 @@
                       BorderBrush="{TemplateBinding BorderBrush}"
                       BorderThickness="{TemplateBinding BorderThickness}"
                       Background="{TemplateBinding Background}"   >
-                            <ContentPresenter Margin="20"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      RecognizesAccessKey="True" />
+                            <ContentPresenter RecognizesAccessKey="True" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="Pink"/>
-                    <Setter Property="BorderThickness" Value="5,0,0,5"/>
+                    <Setter Property="BorderBrush" Value="LightPink"/>
+                    <Setter Property="BorderThickness" Value="5,5,5,5"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
