@@ -68,7 +68,6 @@ namespace StrategoBeta.WPFClient
 		}
 		public MainWindowViewModel(BlueWindow bluewindow, RedWindow redwindow)
 		{
-			//Egyszer fut le
 			FillWithEmptyButtons();
 			CommandSetup();
 			actualTeam = Team.Blue;
@@ -246,7 +245,8 @@ namespace StrategoBeta.WPFClient
 				else
 				{
 					Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
-
+					var index = (10 * (oldRow - 1) + oldCol) - 1;
+					Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
 				}
 
 		}
