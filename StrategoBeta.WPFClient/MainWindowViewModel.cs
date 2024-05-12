@@ -81,6 +81,7 @@ namespace StrategoBeta.WPFClient
 			redwindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
 		}
 
+		//Manages red window
         private void ClickOnPlayingFieldEvent(object? sender, RedWindow.ButtonClickedEventArgs e)
         {
             // Gets the row and column of the button that was clicked
@@ -142,6 +143,7 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
+		//Manages blue window
         private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
 		{
 			// Gets the row and column of the button that was clicked
@@ -207,51 +209,51 @@ namespace StrategoBeta.WPFClient
 		{
 			AddMarshalCommand = new RelayCommand(
 				() => SelectMarshal(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
-				);
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 10) <=0
+                );
 			AddGeneralCommand = new RelayCommand(
 				() => SelectGeneral(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 9)
-				);
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 9) <= 0
+                );
 			AddColonelCommand = new RelayCommand(
 				() => SelectColonel(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 8) <= 2
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 8) <= 2
 				);
 			AddMajorCommand = new RelayCommand(
 				() => SelectMajor(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 7) <= 3
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 7) <= 3
 				);
 			AddCaptainCommand = new RelayCommand(
 				() => SelectCaptain(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 6) <= 4
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 6) <= 4
 				);
 			AddLieutenantCommand = new RelayCommand(
 				() => SelectLieutenant(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 5) <= 4
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 5) <= 4
 				);
 			AddSergeantCommand = new RelayCommand(
 				() => SelectSergeant(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 4) <= 4
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 4) <= 4
 				);
 			AddMinerCommand = new RelayCommand(
 				() => SelectMiner(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 3) <= 5
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 3) <= 5
 				);
 			AddScoutCommand = new RelayCommand(
 				() => SelectScout(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 2) <= 8
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 2) <= 8
 				);
 			AddSpyCommand = new RelayCommand(
 				() => SelectSpy(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 1)
-				);
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 1) <= 0
+                );
 			AddMineCommand = new RelayCommand(
 				() => SelectMine(),
-				() => Pieces.Count(piece => piece.Character.RankPower == 11) <= 6
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 11) <= 6
 				);
 			AddFlagCommand = new RelayCommand(
 				() => SelectFlag(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 0) <= 0
 				);
 			ReadyCommand = new RelayCommand(() => Ready());
 			EndTurnCommand = new RelayCommand(() => EndTurn());
