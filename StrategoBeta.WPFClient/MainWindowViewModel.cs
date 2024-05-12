@@ -31,9 +31,9 @@ namespace StrategoBeta.WPFClient
         public bool InitialPlacement { get; set; } = true;
 		bool placed = true;
 		bool ReadyToPlace = false;
-		int idx;
-		int selectedRow;
-		int selectedColumn;
+		int actualSelectedidx;
+		int actualSelectedRow;
+		int actualSelectedColumn;
 		int oldRow;
 		int oldCol;
 		Rank selectedRank;
@@ -167,14 +167,14 @@ namespace StrategoBeta.WPFClient
 				if (ReadyToPlace)
 				{
 					//Sets the value of the variables to the position where the piece will move
-					selectedRow = row;
-					selectedColumn = column;
+					actualSelectedRow = row;
+					actualSelectedColumn = column;
 
                     //Calculates the place where the piece will move
-                    int selectedIdx = (10 * (selectedRow - 1) + selectedColumn) - 1;
+                    int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
 
 					//Calculates if a piece can move according to it's maximum step
-					if (CalcIfCanMove(Pieces[idx],oldCol,selectedColumn,oldRow,selectedRow))
+					if (CalcIfCanMove(Pieces[actualSelectedidx],oldCol,actualSelectedColumn,oldRow,actualSelectedRow))
 					{
                         PieceMoving(button, selectedIdx);
                         ReadyToPlace = false;
@@ -187,10 +187,10 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
 					//Calculates the index of the place where the piece was
-                    idx = (10 * (oldRow - 1) + oldCol) - 1;
+                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
 
                     //Selects the piece that will be moved
-                    SelectedRank = Pieces[idx].Character.Rank;
+                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
 					if (SelectedRank == Rank.Empty)
 					{
 
@@ -267,17 +267,18 @@ namespace StrategoBeta.WPFClient
 			if (gridIsEmpty)
 			{
 				//Moves the piece to the selected position
+				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), actualSelectedRow, actualSelectedColumn);
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[selectedIdx].Character.Team), selectedRow, selectedColumn);
 				//Sets the style for the button in the new position
 				SetStyle(button, Pieces[selectedIdx].Character.Team);
 				AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
 
 				//Sets sets the old position to an empty character
-                Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
+                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
             }
 			else
 			{
-				var index = (10 * (selectedRow - 1) + selectedColumn) - 1;
+				var index = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
 				bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
 				if (actualTeam is Team.Blue)
 				{
@@ -288,36 +289,27 @@ namespace StrategoBeta.WPFClient
 					}
 					else
 					{
-						Battle(Pieces[idx],Pieces[index],button);
+						Battle(Pieces[actualSelectedidx],Pieces[index],button);
 					}
 				}
-				else
-				{
-					if(IsPieceFriendly)
-					{ 
-					
-					}
-					else 
-					{
-						Battle(Pieces[idx], Pieces[index], button);
-					}
-				}
+				
 			}
 		}
 		void Battle(Piece attacker, Piece defender, Button button)
 		{	
 				if (attacker.Character.RankPower<defender.Character.RankPower)
 				{
-					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), selectedRow, selectedColumn);
+					Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), actualSelectedRow, actualSelectedColumn);
 				}
 				else if (attacker.Character.RankPower>defender.Character.RankPower)
 				{
 
-					Pieces[idx] = new Piece(attacker.Character, defender.Row, defender.Column);
+					Pieces[actualSelectedidx] = new Piece(attacker.Character, defender.Row, defender.Column);
 				}
 				else
 				{
-					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+					Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+
 				}
 
 		}
@@ -541,9 +533,9 @@ namespace StrategoBeta.WPFClient
 				blueWindow.Show();
 			}
 		}
-		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
+		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int actualSelectedRow)
 		{
-			int calculatedStep = selectedRow - oldRow;
+			int calculatedStep = actualSelectedRow - oldRow;
 			if (selectedCol == oldCol && piece.Character.MaxStep >= calculatedStep && calculatedStep != 0)
 			{
 				return true;
