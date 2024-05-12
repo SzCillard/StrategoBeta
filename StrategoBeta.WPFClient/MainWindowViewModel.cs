@@ -91,6 +91,8 @@ namespace StrategoBeta.WPFClient
 				/////////////////////////////////////////////////////
 				//TODO: Selected rank stuck on FLAG and no clue why//
 				/////////////////////////////////////////////////////
+				Piece pieceToReplace = Pieces.FirstOrDefault(p => p.Row == row && p.Column == column);
+				Pieces.Remove(pieceToReplace);
 				Pieces.Add(new Piece(new Character(SelectedRank, Team.Blue), row, column));
 			}
 			else 
