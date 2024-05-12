@@ -263,8 +263,7 @@ namespace StrategoBeta.WPFClient
 			if (gridIsEmpty)
 			{
 				//Moves the piece to the selected position
-				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), actualSelectedRow, actualSelectedColumn);
-				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[selectedIdx].Character.Team), actualSelectedRow, actualSelectedColumn);
+				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
 				//Sets the style for the button in the new position
 				SetStyle(button, Pieces[selectedIdx].Character.Team);
 				AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
