@@ -180,40 +180,40 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}">
-                        <Image Source="Images/bluePiece1.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece1.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}">
-                        <Image Source="Images/bluePiece2.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece2.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel" Command="{Binding AddColonelCommand}">
-                        <Image Source="Images/bluePiece3.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece3.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major" Command="{Binding AddMajorCommand}">
-                        <Image Source="Images/bluePiece4.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece4.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain" Command="{Binding AddCaptainCommand}">
-                        <Image Source="Images/bluePiece5.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece5.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant" Command="{Binding AddLieutenantCommand}">
-                        <Image Source="Images/bluePiece6.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece6.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant" Command="{Binding AddSergeantCommand}">
-                        <Image Source="Images/bluePiece7.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece7.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner" Command="{Binding AddMinerCommand}">
-                        <Image Source="Images/bluePiece8.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece8.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout" Command="{Binding AddScoutCommand}">
-                        <Image Source="Images/bluePiece9.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece9.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy" Command="{Binding AddSpyCommand}">
-                        <Image Source="Images/bluePiece10.png" Stretch="Fill"/>
+                        <Image Source="Images/redPiece10.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine" Command="{Binding AddMineCommand}">
-                        <Image Source="Images/blue_bomb.png" Stretch="Fill"/>
+                        <Image Source="Images/red_bomb.png" Stretch="Fill"/>
                     </Button>
                     <Button Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag" Command="{Binding AddFlagCommand}">
-                        <Image Source="Images/blueFlag.png" Stretch="Fill"/>
+                        <Image Source="Images/redFlag.png" Stretch="Fill"/>
                     </Button>
                 </Grid>
                 <Grid Margin="10">
@@ -223,7 +223,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Button Content="Ready" Grid.Row="0" Style="{StaticResource EndTurnButton}" Command="{Binding ReadyCommand}"/>
-                    <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurn}"/>
+                    <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurnCommand}"/>
                 </Grid>
             </StackPanel>
         </StackPanel>
