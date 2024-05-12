@@ -87,15 +87,11 @@ namespace StrategoBeta.WPFClient
 			// Handle the button click event here
 			int row = e.Row;
 			int column = e.Column;
+			var idx = (10*(row-1) + column)-1;
 			Button button = e.button;
             if (InitialPlacement && !placed)
 			{
-				/////////////////////////////////////////////////////
-				//TODO: Selected rank stuck on FLAG and no clue why//
-				/////////////////////////////////////////////////////
-				Piece pieceToReplace = Pieces.FirstOrDefault(p => p.Row == row && p.Column == column);
-				Pieces.Remove(pieceToReplace);
-				Pieces.Add(new Piece(new Character(SelectedRank, Team.Blue), row, column));
+				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
 			}
