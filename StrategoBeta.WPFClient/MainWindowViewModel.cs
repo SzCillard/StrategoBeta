@@ -96,7 +96,6 @@ namespace StrategoBeta.WPFClient
 				Piece pieceToReplace = Pieces.FirstOrDefault(p => p.Row == row && p.Column == column);
 				Pieces.Remove(pieceToReplace);
 				Pieces.Add(new Piece(new Character(SelectedRank, Team.Blue), row, column));
-				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
 			}
