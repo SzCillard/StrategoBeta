@@ -434,18 +434,17 @@ namespace StrategoBeta.WPFClient
 				redWindow.Show();
 			}
 		}
+		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
+		{
+			int calculatedStep = selectedRow - oldRow;
+			if (selectedCol == oldCol && piece.Character.MaxStep >= calculatedStep)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
-        private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
-        {
-            int calculatedStep = selectedRow - oldRow;
-            if (selectedCol == oldCol && piece.Character.MaxStep >= calculatedStep)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
 }
