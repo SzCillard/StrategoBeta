@@ -424,14 +424,14 @@ namespace StrategoBeta.WPFClient
 			if (actualTeam is Team.Blue)
 			{
 				actualTeam = Team.Red;
-				blueWindow.Close();
-				redWindow.Show();
+				blueWindow.Visibility = Visibility.Hidden;
+				redWindow.ShowDialog();
 			}
 			else
 			{
 				actualTeam = Team.Blue;
-				redWindow.Close();
-				blueWindow.Show();
+				redWindow.Visibility = Visibility.Hidden;
+				blueWindow.ShowDialog();
 			}
 		}
 		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
