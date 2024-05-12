@@ -95,8 +95,7 @@ namespace StrategoBeta.WPFClient
                 Pieces[index] = new Piece(new Character(SelectedRank, Team.Red), row, column);
                 placed = true;
                 SelectedRank = Rank.Empty;
-                SetStyle(button, Team.Red);
-                AddPicture(Pieces[index], button, Team.Red);
+				SetStyle(Pieces[index], button);
             }
             else
             {
@@ -124,18 +123,19 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
                     //Calculates the index of the place where the piece was
-                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
+                    int index = (10 * (oldRow - 1) + oldCol) - 1;
 
                     //Selects the piece that will be moved
-                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
+                    SelectedRank = Pieces[index].Character.Rank;
                     if (SelectedRank == Rank.Empty)
                     {
 
                     }
                     else
                     {
-                        //Sets the style for the button in the old position
-                        SetStyle(button, Team.Empty);
+						//Sets the style for the button in the old position
+						index = (10 * (oldRow - 1) + oldCol) - 1;
+						SetStyle(Pieces[index], button);
                         button.Background = null;
                         ReadyToPlace = true;
                     }
@@ -156,8 +156,7 @@ namespace StrategoBeta.WPFClient
 				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
-				SetStyle(button, Team.Blue);
-                AddPicture(Pieces[index], button, Team.Blue);
+				SetStyle(Pieces[index], button);
             }
 			else 
 			{
@@ -185,7 +184,7 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
 					//Calculates the index of the place where the piece was
-                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
+                    int index = (10 * (oldRow - 1) + oldCol) - 1;
 
                     //Selects the piece that will be moved
                     SelectedRank = Pieces[actualSelectedidx].Character.Rank;
@@ -195,8 +194,9 @@ namespace StrategoBeta.WPFClient
 					}
 					else
 					{
-                        //Sets the style for the button in the old position
-                        SetStyle(button, Team.Empty);
+						//Sets the style for the button in the old position
+						index= (10 * (oldRow - 1) + oldCol) - 1;
+						SetStyle(Pieces[index],button);
                         button.Background = null;
                         ReadyToPlace = true;
                     }
@@ -207,7 +207,7 @@ namespace StrategoBeta.WPFClient
 		{
 			AddMarshalCommand = new RelayCommand(
 				() => SelectMarshal(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
+				() => !Pieces.Any(piece => piece.Character.Team==actualTeam && piece.Character.RankPower==10)
 				);
 			AddGeneralCommand = new RelayCommand(
 				() => SelectGeneral(),
@@ -265,9 +265,7 @@ namespace StrategoBeta.WPFClient
 				//Moves the piece to the selected position
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
 				//Sets the style for the button in the new position
-				SetStyle(button, Pieces[selectedIdx].Character.Team);
-				AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
-
+				SetStyle(Pieces[selectedIdx],button);
 				//Sets sets the old position to an empty character
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
             }
@@ -486,20 +484,23 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
-		private void SetStyle(Button button, Team team)
+		private void SetStyle(Piece piece, Button button)
 		{
+			Team team = piece.Character.Team;
 			if (team == Team.Blue)
 			{
                 button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
-
+				AddPicture(piece, button, team);
             }
 			else if (team == Team.Red)
 			{
                 button.Style = redWindow.FindResource("RedCharacterButton") as Style;
-            }
+				AddPicture(piece, button, team);
+			}
 			else
 			{
                 button.Style = redWindow.FindResource("HiddenButton") as Style;
+				button.Background = null;
             }
         }
 		void EndTurn()
