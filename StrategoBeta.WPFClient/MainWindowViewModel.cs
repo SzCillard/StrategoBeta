@@ -58,7 +58,7 @@ namespace StrategoBeta.WPFClient
 		public ICommand AddMineCommand { get; set; }
 		public ICommand AddFlagCommand { get; set; }
 		public ICommand ReadyCommand { get; set; }
-
+		public ICommand EndTurnCommand { get; set; }
 		public ObservableCollection<Piece> Pieces { set; get; } = new ObservableCollection<Piece>();
 		public MainWindowViewModel()
 		{
@@ -70,7 +70,6 @@ namespace StrategoBeta.WPFClient
 			//Egyszer fut le
 			FillWithEmptyButtons();
 			CommandSetup();
-			ReadyCommand = new RelayCommand(() => Ready());
 			actualTeam = Team.Blue;
 			blueWindow = bluewindow;
 			blueWindow.Show();
@@ -79,6 +78,8 @@ namespace StrategoBeta.WPFClient
 			redWindow = redwindow;
 			redWindow.DataContext = this;
 		}
+
+		
 
 		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
 		{
@@ -175,7 +176,10 @@ namespace StrategoBeta.WPFClient
 				() => SelectFlag(),
 				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
 				);
+			ReadyCommand = new RelayCommand(() => Ready());
+			EndTurnCommand = new RelayCommand(() => EndTurn());
 		}
+
 		void PieceMoving(Button button, int selectedIdx)
 		{
 			bool gridIsEmpty = Pieces[selectedIdx].Character.Rank == Rank.Empty;
@@ -199,7 +203,7 @@ namespace StrategoBeta.WPFClient
 					}
 					else
 					{
-						Battle();
+						Battle(Pieces[idx],Pieces[index],button);
 					}
 				}
 				else
@@ -210,13 +214,46 @@ namespace StrategoBeta.WPFClient
 					}
 					else 
 					{
-						Battle();
+						Battle(Pieces[idx], Pieces[index], button);
 					}
 				}
 			}
 		}
-		void Battle()
-		{ }
+		void Battle(Piece attacker, Piece defender, Button button)
+		{
+			if (attacker.Character.Team is Team.Blue)
+			{
+				if (attacker.Character.RankPower<defender.Character.RankPower)
+				{
+					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), selectedRow, selectedColumn);
+				}
+				else if (attacker.Character.RankPower>defender.Character.RankPower)
+				{
+
+					Pieces[idx] = new Piece(attacker.Character, defender.Row, defender.Column);
+				}
+				else
+				{
+					Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+				}
+			}
+			else
+			{
+				if (attacker.Character.RankPower < defender.Character.RankPower)
+				{
+
+				}
+				else if (attacker.Character.RankPower > defender.Character.RankPower)
+				{
+
+				}
+				else
+				{
+
+				}
+			}
+
+		}
 		void FillWithEmptyButtons()
 		{
 			//Fills the Pieces collection with buttons so they show up in the window.
@@ -358,5 +395,20 @@ namespace StrategoBeta.WPFClient
 		{
             button.Style = blueWindow.FindResource(style) as Style;
         }
-    }
+		void EndTurn()
+		{
+			if (actualTeam is Team.Blue)
+			{
+				actualTeam = Team.Red;
+				blueWindow.Close();
+				redWindow.Show();
+			}
+			else
+			{
+				actualTeam = Team.Blue;
+				redWindow.Close();
+				redWindow.Show();
+			}
+		}
+	}
 }
