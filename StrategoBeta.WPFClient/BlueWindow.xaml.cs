@@ -64,11 +64,6 @@ namespace StrategoBeta.WPFClient
             row = currentPiece.Row;
 			column = currentPiece.Column;
 			ButtonClickedEvent?.Invoke(this, new ButtonClickedEventArgs(row, column,button));
-
-			if (this.viewModel.InitialPlacement && currentPiece.Character.Rank != Rank.Empty)
-			{
-				button.Style = FindResource("BlueCharacterButton") as Style;
-			}
 		}
 
         public void OnLoaded(object sender, RoutedEventArgs e)

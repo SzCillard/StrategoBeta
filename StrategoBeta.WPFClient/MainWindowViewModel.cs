@@ -94,7 +94,8 @@ namespace StrategoBeta.WPFClient
 				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
-			}
+				button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+            }
 			else 
 			{
 				
