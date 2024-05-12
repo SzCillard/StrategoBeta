@@ -104,6 +104,7 @@ namespace StrategoBeta.WPFClient
 					int selectedIdx = (10 * (row - 1) + column) - 1;
 
                     PieceMoving(button, selectedIdx);
+					ReadyToPlace = false;
 				}
 				else
 				{
