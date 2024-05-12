@@ -431,7 +431,7 @@ namespace StrategoBeta.WPFClient
 			{
 				actualTeam = Team.Blue;
 				redWindow.Close();
-				redWindow.Show();
+				blueWindow.Show();
 			}
 		}
 		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
