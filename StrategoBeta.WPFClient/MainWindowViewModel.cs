@@ -30,15 +30,8 @@ namespace StrategoBeta.WPFClient
 		bool placed = true;
 		bool ReadyToPlace;
 		int idx;
-		CustomGridCell selectedgridcell;
-		public CustomGridCell SelectedGridCell
-		{
-			get { return selectedgridcell; }
-			set
-			{
-				SetProperty(ref selectedgridcell, value);
-			}
-		}
+		int selectedRow;
+		int selectedColumn;
 		Rank selectedRank;
 		public Rank SelectedRank
 		{
@@ -105,8 +98,8 @@ namespace StrategoBeta.WPFClient
 			{
 				if (ReadyToPlace)
 				{
-					SelectedGridCell.Row = row;
-					SelectedGridCell.Column = column;
+					selectedRow = row;
+					selectedColumn = column;
 					PieceMoving();
 				}
 				else
@@ -174,11 +167,11 @@ namespace StrategoBeta.WPFClient
 			bool gridIsEmpty = Pieces[idx].Character.Rank == Rank.Empty;
 			if (gridIsEmpty)
 			{
-				Pieces[idx] = new Piece(new Character(SelectedRank, actualTeam), SelectedGridCell.Row, SelectedGridCell.Column);
+				Pieces[idx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
 			}
 			else
 			{
-				var index = (10 * (SelectedGridCell.Row- 1) + SelectedGridCell.Column) - 1;
+				var index = (10 * (selectedRow- 1) + selectedColumn) - 1;
 				bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
 				if (actualTeam is Team.Blue)
 				{
