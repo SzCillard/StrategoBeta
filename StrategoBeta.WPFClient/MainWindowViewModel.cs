@@ -33,6 +33,8 @@ namespace StrategoBeta.WPFClient
 		int idx;
 		int selectedRow;
 		int selectedColumn;
+		int oldRow;
+		int oldCol;
 		Rank selectedRank;
 		public Rank SelectedRank
 		{
@@ -83,11 +85,13 @@ namespace StrategoBeta.WPFClient
 
 		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
 		{
-			// Handle the button click event here
+			// Gets the row and column of the button that was clicked
 			int row = e.Row;
 			int column = e.Column;
 			Button button = e.button;
-			if (InitialPlacement && !placed)
+
+            //Only while pieces are being placed
+            if (InitialPlacement && !placed)
 			{
 				var index = (10 * (row - 1) + column) - 1;
 				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
@@ -98,29 +102,44 @@ namespace StrategoBeta.WPFClient
             }
 			else 
 			{
+				//Movement
 				if (ReadyToPlace)
 				{
+					//Sets the value of the variables to the position where the piece will move
 					selectedRow = row;
 					selectedColumn = column;
-					int selectedIdx = (10 * (row - 1) + column) - 1;
 
-                    PieceMoving(button, selectedIdx);
-					ReadyToPlace = false;
+                    //Calculates the place where the piece will move
+                    int selectedIdx = (10 * (selectedRow - 1) + selectedColumn) - 1;
+
+					//Calculates if a piece can move according to it's maximum step
+					if (CalcIfCanMove(Pieces[idx],oldCol,selectedColumn,oldRow,selectedRow))
+					{
+                        PieceMoving(button, selectedIdx);
+                        ReadyToPlace = false;
+                    }
 				}
 				else
 				{
-					idx = (10 * (row - 1) + column) - 1;
-					SelectedRank = Pieces[idx].Character.Rank;
+                    //Sets the value of the variables to the position where the piece moved from
+                    oldRow = row;
+                    oldCol = column;
+
+					//Calculates the index of the place where the piece was
+                    idx = (10 * (oldRow - 1) + oldCol) - 1;
+
+                    //Selects the piece that will be moved
+                    SelectedRank = Pieces[idx].Character.Rank;
 					if (SelectedRank == Rank.Empty)
 					{
 
 					}
 					else
 					{
-                        ReadyToPlace = true;
-                        Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), row, column);
+                        //Sets the style for the button in the old position
                         SetStyle(button, "HiddenButton");
                         button.Background = null;
+                        ReadyToPlace = true;
                     }
                 }
 			}
@@ -182,24 +201,29 @@ namespace StrategoBeta.WPFClient
 
 		void PieceMoving(Button button, int selectedIdx)
 		{
+			//Checks if the grid that the piece will move to is empty
 			bool gridIsEmpty = Pieces[selectedIdx].Character.Rank == Rank.Empty;
 			if (gridIsEmpty)
 			{
+				//Moves the piece to the selected position
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
-				//Ide lép
+				//Sets the style for the button in the new position
 				SetStyle(button, "BlueCharacterButton");
-				AddPicture(Pieces[selectedIdx],button);
+				AddPicture(Pieces[selectedIdx], button);
+
+				//Sets sets the old position to an empty character
+                Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
             }
 			else
 			{
-				var index = (10 * (selectedRow- 1) + selectedColumn) - 1;
+				var index = (10 * (selectedRow - 1) + selectedColumn) - 1;
 				bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
 				if (actualTeam is Team.Blue)
 				{
 
-					if (IsPieceFriendly) 
-					{ 
-						
+					if (IsPieceFriendly)
+					{
+
 					}
 					else
 					{
@@ -411,4 +435,17 @@ namespace StrategoBeta.WPFClient
 			}
 		}
 	}
+        private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int selectedRow)
+        {
+            int calculatedStep = selectedRow - oldRow;
+            if (selectedCol == oldCol && piece.Character.MaxStep >= calculatedStep)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
