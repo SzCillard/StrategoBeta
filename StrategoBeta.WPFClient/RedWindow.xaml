@@ -114,7 +114,7 @@
 
             </Grid.Resources>
             <Border BorderBrush="BurlyWood"
-         BorderThickness="1">
+         BorderThickness="1" Grid.RowSpan="2">
                 <ItemsControl x:Name="Board"
                    ItemsSource="{Binding Pieces}">
                     <ItemsControl.ItemsPanel>

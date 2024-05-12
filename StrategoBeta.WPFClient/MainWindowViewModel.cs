@@ -508,7 +508,6 @@ namespace StrategoBeta.WPFClient
         {
             if (actualTeam is Team.Blue)
             {
-                aaaa();
                 actualTeam = Team.Red;
                 blueWindow.Visibility = Visibility.Hidden;
                 redWindow.Show();
@@ -538,14 +537,6 @@ namespace StrategoBeta.WPFClient
             else
             {
                 return false;
-            }
-        }
-
-        private void aaaa()
-        {
-            foreach (var item in redWindow.Board.ItemsSource)
-            {
-                (item as Button).Style = redWindow.FindResource("BlueCharacterButton") as Style;
             }
         }
     }
