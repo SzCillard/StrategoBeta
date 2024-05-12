@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace StrategoBeta.WPFClient
 		Team actualTeam;
 		public bool InitialPlacement { get; set; } = true;
 		bool placed = true;
-		bool ReadyToPlace;
+		bool ReadyToPlace = false;
 		int idx;
 		int selectedRow;
 		int selectedColumn;
@@ -100,14 +101,19 @@ namespace StrategoBeta.WPFClient
 				{
 					selectedRow = row;
 					selectedColumn = column;
-					PieceMoving(button);
+					int selectedIdx = (10 * (row - 1) + column) - 1;
+
+                    PieceMoving(button, selectedIdx);
 				}
 				else
 				{
 					idx = (10 * (row - 1) + column) - 1;
 					SelectedRank = Pieces[idx].Character.Rank;
 					ReadyToPlace = true;
-				}
+                    Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), row, column);
+                    button.Style = blueWindow.FindResource("HiddenButton") as Style;
+					button.Background = null;
+                }
 			}
 		}
 
@@ -162,14 +168,15 @@ namespace StrategoBeta.WPFClient
 				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
 				);
 		}
-		void PieceMoving(Button button)
+		void PieceMoving(Button button, int selectedIdx)
 		{
-			bool gridIsEmpty = Pieces[idx].Character.Rank == Rank.Empty;
+			bool gridIsEmpty = Pieces[selectedIdx].Character.Rank == Rank.Empty;
 			if (gridIsEmpty)
 			{
-				Pieces[idx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
+				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
 				//Ide lép
                 button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+				AddPicture(Pieces[selectedIdx],button);
             }
 			else
 			{
