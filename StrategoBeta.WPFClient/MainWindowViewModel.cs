@@ -100,7 +100,7 @@ namespace StrategoBeta.WPFClient
 				{
 					selectedRow = row;
 					selectedColumn = column;
-					PieceMoving();
+					PieceMoving(button);
 				}
 				else
 				{
@@ -162,13 +162,15 @@ namespace StrategoBeta.WPFClient
 				() => !Pieces.Any(piece => piece.Character.RankPower == 0)
 				);
 		}
-		void PieceMoving()
+		void PieceMoving(Button button)
 		{
 			bool gridIsEmpty = Pieces[idx].Character.Rank == Rank.Empty;
 			if (gridIsEmpty)
 			{
 				Pieces[idx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
-			}
+				//Ide lép
+                button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+            }
 			else
 			{
 				var index = (10 * (selectedRow- 1) + selectedColumn) - 1;
