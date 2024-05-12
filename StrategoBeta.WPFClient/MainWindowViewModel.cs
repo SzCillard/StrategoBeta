@@ -27,7 +27,8 @@ namespace StrategoBeta.WPFClient
 		BlueWindow blueWindow;
 		RedWindow redWindow;
 		Team actualTeam;
-		public bool InitialPlacement { get; set; } = true;
+        bool first = true;
+        public bool InitialPlacement { get; set; } = true;
 		bool placed = true;
 		bool ReadyToPlace = false;
 		int actualSelectedidx;
@@ -65,7 +66,7 @@ namespace StrategoBeta.WPFClient
 		public MainWindowViewModel()
 		{
 
-		}
+        }
 		public MainWindowViewModel(BlueWindow bluewindow, RedWindow redwindow)
 		{
 			FillWithEmptyButtons();
@@ -77,11 +78,72 @@ namespace StrategoBeta.WPFClient
 			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
 			redWindow = redwindow;
 			redWindow.DataContext = this;
+			redwindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
 		}
 
-		
+        private void ClickOnPlayingFieldEvent(object? sender, RedWindow.ButtonClickedEventArgs e)
+        {
+            // Gets the row and column of the button that was clicked
+            int row = e.Row;
+            int column = e.Column;
+            Button button = e.button;
 
-		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
+            //Only while pieces are being placed
+            if (InitialPlacement && !placed)
+            {
+                var index = (10 * (row - 1) + column) - 1;
+                Pieces[index] = new Piece(new Character(SelectedRank, Team.Red), row, column);
+                placed = true;
+                SelectedRank = Rank.Empty;
+                SetStyle(button, Team.Red);
+                AddPicture(Pieces[index], button, Team.Red);
+            }
+            else
+            {
+                //Movement
+                if (ReadyToPlace)
+                {
+                    //Sets the value of the variables to the position where the piece will move
+                    actualSelectedRow = row;
+                    actualSelectedColumn = column;
+
+                    //Calculates the place where the piece will move
+                    int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
+
+                    //Calculates if a piece can move according to it's maximum step
+                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldCol, actualSelectedColumn, oldRow, actualSelectedRow))
+                    {
+                        PieceMoving(button, selectedIdx);
+                        ReadyToPlace = false;
+                    }
+                }
+                else
+                {
+                    //Sets the value of the variables to the position where the piece moved from
+                    oldRow = row;
+                    oldCol = column;
+
+                    //Calculates the index of the place where the piece was
+                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
+
+                    //Selects the piece that will be moved
+                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
+                    if (SelectedRank == Rank.Empty)
+                    {
+
+                    }
+                    else
+                    {
+                        //Sets the style for the button in the old position
+                        SetStyle(button, Team.Empty);
+                        button.Background = null;
+                        ReadyToPlace = true;
+                    }
+                }
+            }
+        }
+
+        private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
 		{
 			// Gets the row and column of the button that was clicked
 			int row = e.Row;
@@ -95,8 +157,8 @@ namespace StrategoBeta.WPFClient
 				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
-				SetStyle(button, "BlueCharacterButton");
-                AddPicture(Pieces[index], button);
+				SetStyle(button, Team.Blue);
+                AddPicture(Pieces[index], button, Team.Blue);
             }
 			else 
 			{
@@ -135,7 +197,7 @@ namespace StrategoBeta.WPFClient
 					else
 					{
                         //Sets the style for the button in the old position
-                        SetStyle(button, "HiddenButton");
+                        SetStyle(button, Team.Empty);
                         button.Background = null;
                         ReadyToPlace = true;
                     }
@@ -205,9 +267,10 @@ namespace StrategoBeta.WPFClient
 			{
 				//Moves the piece to the selected position
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), actualSelectedRow, actualSelectedColumn);
+				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[selectedIdx].Character.Team), actualSelectedRow, actualSelectedColumn);
 				//Sets the style for the button in the new position
-				SetStyle(button, "BlueCharacterButton");
-				AddPicture(Pieces[selectedIdx], button);
+				SetStyle(button, Pieces[selectedIdx].Character.Team);
+				AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
 
 				//Sets sets the old position to an empty character
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
@@ -345,51 +408,108 @@ namespace StrategoBeta.WPFClient
 			var a = Pieces;
 			ReadyEvent?.Invoke(this, null);
 		}
-		private void AddPicture(Piece piece, Button button)
+		public void AddPicture(Piece piece, Button button, Team team)
 		{
-            switch (piece.Character.Rank)
-            {
-                case Rank.Flag:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blueFlag.png", UriKind.Relative)));
-                    break;
-                case Rank.Spy:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece10.png", UriKind.Relative)));
-                    break;
-                case Rank.Scout:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative)));
-                    break;
-                case Rank.Miner:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece8.png", UriKind.Relative)));
-                    break;
-                case Rank.Sergeant:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece7.png", UriKind.Relative)));
-                    break;
-                case Rank.Lieutenant:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece6.png", UriKind.Relative)));
-                    break;
-                case Rank.Captain:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece5.png", UriKind.Relative)));
-                    break;
-                case Rank.Major:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece4.png", UriKind.Relative)));
-                    break;
-                case Rank.Colonel:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece3.png", UriKind.Relative)));
-                    break;
-                case Rank.General:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece2.png", UriKind.Relative)));
-                    break;
-                case Rank.Marshal:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece1.png", UriKind.Relative)));
-                    break;
-                case Rank.Mine:
-                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative)));
-                    break;
+			if (team == Team.Blue)
+			{
+                switch (piece.Character.Rank)
+                {
+                    case Rank.Flag:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blueFlag.png", UriKind.Relative)));
+                        break;
+                    case Rank.Spy:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece10.png", UriKind.Relative)));
+                        break;
+                    case Rank.Scout:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative)));
+                        break;
+                    case Rank.Miner:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece8.png", UriKind.Relative)));
+                        break;
+                    case Rank.Sergeant:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece7.png", UriKind.Relative)));
+                        break;
+                    case Rank.Lieutenant:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece6.png", UriKind.Relative)));
+                        break;
+                    case Rank.Captain:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece5.png", UriKind.Relative)));
+                        break;
+                    case Rank.Major:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece4.png", UriKind.Relative)));
+                        break;
+                    case Rank.Colonel:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece3.png", UriKind.Relative)));
+                        break;
+                    case Rank.General:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece2.png", UriKind.Relative)));
+                        break;
+                    case Rank.Marshal:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece1.png", UriKind.Relative)));
+                        break;
+                    case Rank.Mine:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative)));
+                        break;
+                }
+            }
+			else if (team == Team.Red)
+			{
+                switch (piece.Character.Rank)
+                {
+                    case Rank.Flag:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redFlag.png", UriKind.Relative)));
+                        break;
+                    case Rank.Spy:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece10.png", UriKind.Relative)));
+                        break;
+                    case Rank.Scout:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece9.png", UriKind.Relative)));
+                        break;
+                    case Rank.Miner:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece8.png", UriKind.Relative)));
+                        break;
+                    case Rank.Sergeant:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece7.png", UriKind.Relative)));
+                        break;
+                    case Rank.Lieutenant:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece6.png", UriKind.Relative)));
+                        break;
+                    case Rank.Captain:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece5.png", UriKind.Relative)));
+                        break;
+                    case Rank.Major:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece4.png", UriKind.Relative)));
+                        break;
+                    case Rank.Colonel:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece3.png", UriKind.Relative)));
+                        break;
+                    case Rank.General:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece2.png", UriKind.Relative)));
+                        break;
+                    case Rank.Marshal:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/redPiece1.png", UriKind.Relative)));
+                        break;
+                    case Rank.Mine:
+                        button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/red_bomb.png", UriKind.Relative)));
+                        break;
+                }
             }
         }
-		private void SetStyle(Button button, string style)
+		private void SetStyle(Button button, Team team)
 		{
-            button.Style = blueWindow.FindResource(style) as Style;
+			if (team == Team.Blue)
+			{
+                button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+
+            }
+			else if (team == Team.Red)
+			{
+                button.Style = redWindow.FindResource("RedCharacterButton") as Style;
+            }
+			else
+			{
+                button.Style = redWindow.FindResource("HiddenButton") as Style;
+            }
         }
 		void EndTurn()
 		{
@@ -397,13 +517,20 @@ namespace StrategoBeta.WPFClient
 			{
 				actualTeam = Team.Red;
 				blueWindow.Visibility = Visibility.Hidden;
-				redWindow.ShowDialog();
+				redWindow.Show();
+				if (first)
+				{
+                    InitialPlacement = true;
+					placed = false;
+					ReadyToPlace = false;
+					first = false;
+				}
 			}
 			else
 			{
 				actualTeam = Team.Blue;
 				redWindow.Visibility = Visibility.Hidden;
-				blueWindow.ShowDialog();
+				blueWindow.Show();
 			}
 		}
 		private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int actualSelectedRow)
