@@ -143,7 +143,6 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
-
         private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
 		{
 			// Gets the row and column of the button that was clicked
@@ -205,7 +204,6 @@ namespace StrategoBeta.WPFClient
                 }
 			}
 		}
-
 		void CommandSetup()
 		{
 			AddMarshalCommand = new RelayCommand(
@@ -259,7 +257,6 @@ namespace StrategoBeta.WPFClient
 			ReadyCommand = new RelayCommand(() => Ready());
 			EndTurnCommand = new RelayCommand(() => EndTurn());
 		}
-
 		void PieceMoving(Button button, int selectedIdx)
 		{
 			//Checks if the grid that the piece will move to is empty
@@ -327,7 +324,6 @@ namespace StrategoBeta.WPFClient
 				}
 			}
 		}
-
 		//God forgive me for i have sinned (i do not feel proud of this)
 		private void SelectMarshal()
 		{
@@ -524,7 +520,8 @@ namespace StrategoBeta.WPFClient
 					placed = false;
 					ReadyToPlace = false;
 					first = false;
-				}
+                    selectedRank = Rank.Empty;
+                }
 			}
 			else
 			{
