@@ -105,14 +105,14 @@ namespace StrategoBeta.WPFClient
                 if (ReadyToPlace)
                 {
                     //Sets the value of the variables to the position where the piece will move
-                    selectedRow = row;
-                    selectedColumn = column;
+                    actualSelectedRow = row;
+                    actualSelectedColumn = column;
 
                     //Calculates the place where the piece will move
-                    int selectedIdx = (10 * (selectedRow - 1) + selectedColumn) - 1;
+                    int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
 
                     //Calculates if a piece can move according to it's maximum step
-                    if (CalcIfCanMove(Pieces[idx], oldCol, selectedColumn, oldRow, selectedRow))
+                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldCol, actualSelectedColumn, oldRow, actualSelectedRow))
                     {
                         PieceMoving(button, selectedIdx);
                         ReadyToPlace = false;
@@ -125,10 +125,10 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
                     //Calculates the index of the place where the piece was
-                    idx = (10 * (oldRow - 1) + oldCol) - 1;
+                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
 
                     //Selects the piece that will be moved
-                    SelectedRank = Pieces[idx].Character.Rank;
+                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
                     if (SelectedRank == Rank.Empty)
                     {
 
@@ -268,7 +268,7 @@ namespace StrategoBeta.WPFClient
 			{
 				//Moves the piece to the selected position
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), actualSelectedRow, actualSelectedColumn);
-				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[selectedIdx].Character.Team), selectedRow, selectedColumn);
+				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[selectedIdx].Character.Team), actualSelectedRow, actualSelectedColumn);
 				//Sets the style for the button in the new position
 				SetStyle(button, Pieces[selectedIdx].Character.Team);
 				AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
