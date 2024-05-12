@@ -275,17 +275,13 @@ namespace StrategoBeta.WPFClient
 			{
 				var index = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
 				bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
-				if (actualTeam is Team.Blue)
+				if (IsPieceFriendly)
 				{
 
-					if (IsPieceFriendly)
-					{
-
-					}
-					else
-					{
-						Battle(Pieces[actualSelectedidx],Pieces[index],button);
-					}
+				}
+				else
+				{
+					Battle(Pieces[actualSelectedidx], Pieces[index], button);
 				}
 				
 			}
