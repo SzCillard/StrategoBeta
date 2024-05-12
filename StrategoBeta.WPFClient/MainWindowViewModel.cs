@@ -115,7 +115,7 @@ namespace StrategoBeta.WPFClient
 		{
 			AddMarshalCommand = new RelayCommand(
 				() => SelectMarshal(),
-				() => !Pieces.Any(piece => piece.Character.RankPower == 9)
+				() => !Pieces.Any(piece => piece.Character.RankPower == 10)
 				);
 			AddGeneralCommand = new RelayCommand(
 				() => SelectGeneral(),
