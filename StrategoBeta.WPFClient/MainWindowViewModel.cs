@@ -92,7 +92,7 @@ namespace StrategoBeta.WPFClient
 				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
-				button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+				SetStyle(button, "BlueCharacterButton");
                 AddPicture(Pieces[index], button);
             }
 			else 
@@ -118,7 +118,7 @@ namespace StrategoBeta.WPFClient
 					{
                         ReadyToPlace = true;
                         Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), row, column);
-                        button.Style = blueWindow.FindResource("HiddenButton") as Style;
+                        SetStyle(button, "HiddenButton");
                         button.Background = null;
                     }
                 }
@@ -183,7 +183,7 @@ namespace StrategoBeta.WPFClient
 			{
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, actualTeam), selectedRow, selectedColumn);
 				//Ide lép
-                button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
+				SetStyle(button, "BlueCharacterButton");
 				AddPicture(Pieces[selectedIdx],button);
             }
 			else
@@ -305,7 +305,6 @@ namespace StrategoBeta.WPFClient
 			RankSelectionEvent?.Invoke(this, null);
 			placed = false;
 		}
-
 		//Changes initialPlacement to True (finished placing down the pieces)
 		private void Ready()
 		{
@@ -313,7 +312,6 @@ namespace StrategoBeta.WPFClient
 			var a = Pieces;
 			ReadyEvent?.Invoke(this, null);
 		}
-
 		private void AddPicture(Piece piece, Button button)
 		{
             switch (piece.Character.Rank)
@@ -355,6 +353,10 @@ namespace StrategoBeta.WPFClient
                     button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative)));
                     break;
             }
+        }
+		private void SetStyle(Button button, string style)
+		{
+            button.Style = blueWindow.FindResource(style) as Style;
         }
     }
 }
