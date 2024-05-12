@@ -24,6 +24,8 @@ namespace StrategoBeta.WPFClient
 		public event EventHandler<ButtonClickedEventArgs> ButtonClickedEvent;
 		int row;
 		int column;
+		int selectedRowForMoving;
+		int selectedColumnforMoving;
 		public BlueWindow()
 		{
 			InitializeComponent();
