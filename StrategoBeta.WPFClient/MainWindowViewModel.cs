@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace StrategoBeta.WPFClient
 {
@@ -95,8 +96,9 @@ namespace StrategoBeta.WPFClient
 				placed = true;
 				SelectedRank = Rank.Empty;
 				button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
-			}
-			else
+                AddPicture(Pieces[idx], button);
+            }
+			else 
 			{
 				if (!placed)
 				{
@@ -268,5 +270,47 @@ namespace StrategoBeta.WPFClient
 			ReadyEvent?.Invoke(this, null);
 		}
 
-	}
+		private void AddPicture(Piece piece, Button button)
+		{
+            switch (piece.Character.Rank)
+            {
+                case Rank.Flag:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blueFlag.png", UriKind.Relative)));
+                    break;
+                case Rank.Spy:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece10.png", UriKind.Relative)));
+                    break;
+                case Rank.Scout:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative)));
+                    break;
+                case Rank.Miner:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece8.png", UriKind.Relative)));
+                    break;
+                case Rank.Sergeant:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece7.png", UriKind.Relative)));
+                    break;
+                case Rank.Lieutenant:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece6.png", UriKind.Relative)));
+                    break;
+                case Rank.Captain:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece5.png", UriKind.Relative)));
+                    break;
+                case Rank.Major:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece4.png", UriKind.Relative)));
+                    break;
+                case Rank.Colonel:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece3.png", UriKind.Relative)));
+                    break;
+                case Rank.General:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece2.png", UriKind.Relative)));
+                    break;
+                case Rank.Marshal:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/bluePiece1.png", UriKind.Relative)));
+                    break;
+                case Rank.Mine:
+                    button.Background = new ImageBrush(new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative)));
+                    break;
+            }
+        }
+    }
 }
