@@ -229,17 +229,7 @@ namespace StrategoBeta.WPFClient
 						Battle(Pieces[actualSelectedidx],Pieces[index],button);
 					}
 				}
-				else
-				{
-					if(IsPieceFriendly)
-					{ 
-					
-					}
-					else 
-					{
-						Battle(Pieces[actualSelectedidx], Pieces[index], button);
-					}
-				}
+				
 			}
 		}
 		void Battle(Piece attacker, Piece defender, Button button)
