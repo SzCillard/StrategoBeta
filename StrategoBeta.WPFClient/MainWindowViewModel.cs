@@ -62,16 +62,22 @@ namespace StrategoBeta.WPFClient
 		public ObservableCollection<Piece> Pieces { set; get; } = new ObservableCollection<Piece>();
         public MainWindowViewModel()
         {
-            FillWithEmptyButtons();
-            CommandSetup();
-			ReadyCommand = new RelayCommand(() => Ready());
+			//(már javitott)Négyszer fut le a konstruktor, egyszer amikor a MainWindowban letrehozza, majd egyszer-egyszer a blue és red window konstruktora miatt
+           
         }
         public MainWindowViewModel(BlueWindow bluewindow,RedWindow redwindow)
-		{ 
+		{
+			//Egyszer fut le
+			FillWithEmptyButtons();
+			CommandSetup();
+			ReadyCommand = new RelayCommand(() => Ready());
 			actualTeam = Team.Blue;
             blueWindow = bluewindow;
+			blueWindow.Show();
+			blueWindow.DataContext = this;
 			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
 			redWindow = redwindow;
+			redWindow.DataContext = this;
         }
 
 		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)

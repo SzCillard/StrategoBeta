@@ -30,7 +30,7 @@ namespace StrategoBeta.WPFClient
 		public BlueWindow()
 		{
 			InitializeComponent();
-			DataContext = new MainWindowViewModel();
+			//DataContext = new MainWindowViewModel();
 			SubscribeToButtonClickEvents();
 		}
 		public class ButtonClickedEventArgs : EventArgs

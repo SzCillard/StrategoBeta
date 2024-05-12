@@ -22,7 +22,7 @@ namespace StrategoBeta.WPFClient
 		public RedWindow()
 		{
 			InitializeComponent();
-			DataContext = new MainWindowViewModel();
+			//DataContext = new MainWindowViewModel();
 		}
 	}
 }
