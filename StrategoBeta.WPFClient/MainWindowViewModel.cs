@@ -91,9 +91,6 @@ namespace StrategoBeta.WPFClient
 			Button button = e.button;
             if (initialPlacement)
 			{
-				/////////////////////////////////////////////////////
-				//TODO: Selected rank stuck on FLAG and no clue why//
-				/////////////////////////////////////////////////////
 				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 			}
 			else 
