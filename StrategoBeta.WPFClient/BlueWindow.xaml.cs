@@ -27,11 +27,13 @@ namespace StrategoBeta.WPFClient
 		int column;
 		int selectedRowForMoving;
 		int selectedColumnforMoving;
+		MainWindowViewModel viewModel;
 		public BlueWindow()
 		{
 			InitializeComponent();
-			//DataContext = new MainWindowViewModel();
-			SubscribeToButtonClickEvents();
+            //DataContext = new MainWindowViewModel();
+            this.Loaded += new RoutedEventHandler(OnLoaded);
+            SubscribeToButtonClickEvents();
 		}
 		public class ButtonClickedEventArgs : EventArgs
 		{
@@ -62,6 +64,16 @@ namespace StrategoBeta.WPFClient
             row = currentPiece.Row;
 			column = currentPiece.Column;
 			ButtonClickedEvent?.Invoke(this, new ButtonClickedEventArgs(row, column,button));
+
+			if (this.viewModel.InitialPlacement && currentPiece.Character.Rank != Rank.Empty)
+			{
+				button.Style = FindResource("BlueCharacterButton") as Style;
+			}
 		}
-	}
+
+        public void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            viewModel = this.DataContext as MainWindowViewModel;
+        }
+    }
 }

@@ -24,7 +24,8 @@ namespace StrategoBeta.WPFClient
         BlueWindow blueWindow;
         RedWindow redWindow;
         Team actualTeam;
-		bool initialPlacement = true;
+		public bool InitialPlacement { get; set; } = true;
+		bool placed = true;
 		SelectedGridCell selectedgridcell;
 		public SelectedGridCell SelectedGridCell
 		{
@@ -89,9 +90,11 @@ namespace StrategoBeta.WPFClient
 			//Calculates the index of the collection
 			int idx = (10*(row-1) + column)-1;
 			Button button = e.button;
-            if (initialPlacement)
+            if (InitialPlacement && !placed)
 			{
 				Pieces[idx] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
+				placed = true;
+				SelectedRank = Rank.Empty;
 			}
 			else 
 			{
@@ -174,67 +177,79 @@ namespace StrategoBeta.WPFClient
 		{
 			SelectedRank = Rank.Marshal;
 			RankSelectionEvent?.Invoke(this, null);
+			placed = false;
 		}
         private void SelectGeneral()
         {
             SelectedRank = Rank.General;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectColonel()
         {
             SelectedRank = Rank.Colonel;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectMajor()
         {
             SelectedRank = Rank.Major;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectCaptain()
         {
             SelectedRank = Rank.Captain;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectLieutenant()
         {
             SelectedRank = Rank.Lieutenant;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectSergeant()
         {
             SelectedRank = Rank.Sergeant;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectMiner()
         {
             SelectedRank = Rank.Miner;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectScout()
         {
             SelectedRank = Rank.Scout;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectSpy()
         {
             SelectedRank = Rank.Spy;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectMine()
         {
             SelectedRank = Rank.Mine;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
         private void SelectFlag()
         {
             SelectedRank = Rank.Flag;
             RankSelectionEvent?.Invoke(this, null);
+            placed = false;
         }
 
 		//Changes initialPlacement to True (finished placing down the pieces)
 		private void Ready()
 		{
-			initialPlacement = false;
+			InitialPlacement = false;
 			var a = Pieces;
             ReadyEvent?.Invoke(this, null);
         }
