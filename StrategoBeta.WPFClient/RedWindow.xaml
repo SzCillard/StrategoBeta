@@ -223,7 +223,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Button Content="Ready" Grid.Row="0" Style="{StaticResource EndTurnButton}" Command="{Binding ReadyCommand}"/>
-                    <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurn}"/>
+                    <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurnCommand}"/>
                 </Grid>
             </StackPanel>
         </StackPanel>
