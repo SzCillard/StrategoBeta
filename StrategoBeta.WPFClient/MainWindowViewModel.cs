@@ -340,6 +340,7 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Red;
                 blueWindow.Title = "Red";
+                blueWindow.ChangeMenu();
                 if (first)
                 {
                     InitialPlacement = true;
@@ -353,6 +354,7 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Blue;
                 blueWindow.Title = "Blue";
+                blueWindow.ChangeMenu();
             }
         }
         public void AddPicture(Button button, Piece piece,Team team)
@@ -465,8 +467,8 @@ namespace StrategoBeta.WPFClient
         private bool CalcIfCanMove(Piece piece, int oldRow,int oldCol)
         {
             int calculatedRow = Math.Abs(actualSelectedRow - oldRow);
-            int calculatedCol=Math.Abs(actualSelectedColumn- oldCol);
-            if (piece.Character.MaxStep >= calculatedRow || piece.Character.MaxStep>=calculatedCol)
+            int calculatedCol = Math.Abs(actualSelectedColumn- oldCol);
+            if ((piece.Character.MaxStep >= calculatedRow && piece.Character.MaxStep>=calculatedCol) && (oldRow == actualSelectedRow || oldCol == actualSelectedColumn))
             {
                 return true;
             }
