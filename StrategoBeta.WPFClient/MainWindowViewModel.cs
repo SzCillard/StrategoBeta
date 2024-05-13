@@ -136,8 +136,7 @@ namespace StrategoBeta.WPFClient
                     {
 						//Sets the style for the button in the old position
 						index = (10 * (oldRow - 1) + oldCol) - 1;
-						SetStyle(Pieces[index], button);
-                        button.Background = null;
+						SetStyleEmpty(button,Team.Empty);
                         ReadyToPlace = true;
                     }
                 }
@@ -198,65 +197,11 @@ namespace StrategoBeta.WPFClient
 					{
 						//Sets the style for the button in the old position
 						index= (10 * (oldRow - 1) + oldCol) - 1;
-						SetStyle(Pieces[index],button);
-                        button.Background = null;
+						SetStyleEmpty(button,Team.Empty);
                         ReadyToPlace = true;
                     }
                 }
 			}
-		}
-		void CommandSetup()
-		{
-			AddMarshalCommand = new RelayCommand(
-				() => SelectMarshal(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 10) <=0
-                );
-			AddGeneralCommand = new RelayCommand(
-				() => SelectGeneral(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 9) <= 0
-                );
-			AddColonelCommand = new RelayCommand(
-				() => SelectColonel(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 8) <= 2
-				);
-			AddMajorCommand = new RelayCommand(
-				() => SelectMajor(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 7) <= 3
-				);
-			AddCaptainCommand = new RelayCommand(
-				() => SelectCaptain(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 6) <= 4
-				);
-			AddLieutenantCommand = new RelayCommand(
-				() => SelectLieutenant(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 5) <= 4
-				);
-			AddSergeantCommand = new RelayCommand(
-				() => SelectSergeant(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 4) <= 4
-				);
-			AddMinerCommand = new RelayCommand(
-				() => SelectMiner(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 3) <= 5
-				);
-			AddScoutCommand = new RelayCommand(
-				() => SelectScout(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 2) <= 8
-				);
-			AddSpyCommand = new RelayCommand(
-				() => SelectSpy(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 1) <= 0
-                );
-			AddMineCommand = new RelayCommand(
-				() => SelectMine(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 11) <= 6
-				);
-			AddFlagCommand = new RelayCommand(
-				() => SelectFlag(),
-				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 0) <= 0
-				);
-			ReadyCommand = new RelayCommand(() => Ready());
-			EndTurnCommand = new RelayCommand(() => EndTurn());
 		}
 		void PieceMoving(Button button, int selectedIdx)
 		{
@@ -320,6 +265,59 @@ namespace StrategoBeta.WPFClient
 			}
 		}
 		//God forgive me for i have sinned (i do not feel proud of this)
+		void CommandSetup()
+		{
+			AddMarshalCommand = new RelayCommand(
+				() => SelectMarshal(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 10) <= 0
+				);
+			AddGeneralCommand = new RelayCommand(
+				() => SelectGeneral(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 9) <= 0
+				);
+			AddColonelCommand = new RelayCommand(
+				() => SelectColonel(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 8) <= 2
+				);
+			AddMajorCommand = new RelayCommand(
+				() => SelectMajor(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 7) <= 3
+				);
+			AddCaptainCommand = new RelayCommand(
+				() => SelectCaptain(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 6) <= 4
+				);
+			AddLieutenantCommand = new RelayCommand(
+				() => SelectLieutenant(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 5) <= 4
+				);
+			AddSergeantCommand = new RelayCommand(
+				() => SelectSergeant(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 4) <= 4
+				);
+			AddMinerCommand = new RelayCommand(
+				() => SelectMiner(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 3) <= 5
+				);
+			AddScoutCommand = new RelayCommand(
+				() => SelectScout(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 2) <= 8
+				);
+			AddSpyCommand = new RelayCommand(
+				() => SelectSpy(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 1) <= 0
+				);
+			AddMineCommand = new RelayCommand(
+				() => SelectMine(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 11) <= 6
+				);
+			AddFlagCommand = new RelayCommand(
+				() => SelectFlag(),
+				() => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 0) <= 0
+				);
+			ReadyCommand = new RelayCommand(() => Ready());
+			EndTurnCommand = new RelayCommand(() => EndTurn());
+		}
 		private void SelectMarshal()
 		{
 			SelectedRank = Rank.Marshal;
@@ -505,6 +503,15 @@ namespace StrategoBeta.WPFClient
 				button.Background = null;
             }
         }
+		private void SetStyleEmpty(Button button, Team team)
+		{
+			if (team == Team.Empty) 
+			{
+				button.Style = redWindow.FindResource("HiddenButton") as Style;
+				button.Background = null;
+			}
+		}
+
 		void EndTurn()
 		{
 			if (actualTeam is Team.Blue)
