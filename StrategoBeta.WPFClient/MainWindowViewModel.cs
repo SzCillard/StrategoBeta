@@ -469,6 +469,10 @@ namespace StrategoBeta.WPFClient
             {
                 return true;
             }
+            else if(piece.Character.Rank == Rank.Flag || piece.Character.Rank == Rank.Mine)
+            {
+                return false;
+            }
             else
             {
                 return false;
