@@ -70,8 +70,7 @@ namespace StrategoBeta.WPFClient
         {
             viewModel = this.DataContext as MainWindowViewModel;
         }
-
-        private void ChangeMenu_Click(object sender, RoutedEventArgs e)
+        public void ChangeMenu()
         {
             if (Title == "Red")
             {

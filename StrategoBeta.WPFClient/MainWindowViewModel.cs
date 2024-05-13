@@ -340,6 +340,7 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Red;
                 blueWindow.Title = "Red";
+                blueWindow.ChangeMenu();
                 if (first)
                 {
                     InitialPlacement = true;
@@ -353,6 +354,7 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Blue;
                 blueWindow.Title = "Blue";
+                blueWindow.ChangeMenu();
             }
         }
         public void AddPicture(Piece piece, Button button, Team team)

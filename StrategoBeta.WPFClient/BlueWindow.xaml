@@ -174,84 +174,84 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="buttonMarshal" Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonMarshal" Grid.Row="0" Grid.Column="0" Margin="2" Tag="Marshal" Command="{Binding AddMarshalCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece1.png" Name="buttonMarshalIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonGeneral" Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonGeneral" Grid.Row="0" Grid.Column="1" Margin="2" Tag="General" Command="{Binding AddGeneralCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece2.png" Name="buttonGeneralIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonColonel" Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel" Command="{Binding AddColonelCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonColonel" Grid.Row="1" Grid.Column="0" Margin="2" Tag="Colonel" Command="{Binding AddColonelCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece3.png" Name="buttonColonelIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonMajor" Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major" Command="{Binding AddMajorCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonMajor" Grid.Row="1" Grid.Column="1" Margin="2" Tag="Major" Command="{Binding AddMajorCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece4.png" Name="buttonMajorIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonCaptain" Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain" Command="{Binding AddCaptainCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonCaptain" Grid.Row="2" Grid.Column="0" Margin="2" Tag="Captain" Command="{Binding AddCaptainCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece5.png" Name="buttonCaptainIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonLieutenant" Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant" Command="{Binding AddLieutenantCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonLieutenant" Grid.Row="2" Grid.Column="1" Margin="2" Tag="Lieutenant" Command="{Binding AddLieutenantCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece6.png" Name="buttonLieutenantIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonSergeant" Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant" Command="{Binding AddSergeantCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonSergeant" Grid.Row="3" Grid.Column="0" Margin="2" Tag="Sergeant" Command="{Binding AddSergeantCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece7.png" Name="buttonSergeantIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonMiner" Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner" Command="{Binding AddMinerCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonMiner" Grid.Row="3" Grid.Column="1" Margin="2" Tag="Miner" Command="{Binding AddMinerCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece8.png" Name="buttonMinerIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonScout" Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout" Command="{Binding AddScoutCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonScout" Grid.Row="4" Grid.Column="0" Margin="2" Tag="Scout" Command="{Binding AddScoutCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece9.png" Name="buttonScoutIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonSpy" Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy" Command="{Binding AddSpyCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonSpy" Grid.Row="4" Grid.Column="1" Margin="2" Tag="Spy" Command="{Binding AddSpyCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/bluePiece10.png" Name="buttonSpyIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonMine" Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine" Command="{Binding AddMineCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonMine" Grid.Row="5" Grid.Column="0" Margin="2" Tag="Mine" Command="{Binding AddMineCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/blue_bomb.png" Name="buttonMineIMG" Stretch="Fill"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="buttonFlag" Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag" Command="{Binding AddFlagCommand}" Click="ChangeMenu_Click">
+                    <Button x:Name="buttonFlag" Grid.Row="5" Grid.Column="1" Margin="2" Tag="Flag" Command="{Binding AddFlagCommand}">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="Images/blueFlag.png" Name="buttonFlagIMG" Stretch="Fill"/>
