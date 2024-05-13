@@ -132,6 +132,10 @@ namespace StrategoBeta.WPFClient
                     {
 
                     }
+                    else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine)
+                    {
+
+                    }
                     else
                     {
                         //Sets the style for the button in the old position
