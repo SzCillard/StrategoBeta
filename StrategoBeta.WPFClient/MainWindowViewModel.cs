@@ -135,7 +135,6 @@ namespace StrategoBeta.WPFClient
                     else
                     {
 						//Sets the style for the button in the old position
-						index = (10 * (oldRow - 1) + oldCol) - 1;
 						SetStyleEmpty(button,Team.Empty);
                         ReadyToPlace = true;
                     }
@@ -196,7 +195,6 @@ namespace StrategoBeta.WPFClient
 					else
 					{
 						//Sets the style for the button in the old position
-						index= (10 * (oldRow - 1) + oldCol) - 1;
 						SetStyleEmpty(button,Team.Empty);
                         ReadyToPlace = true;
                     }
