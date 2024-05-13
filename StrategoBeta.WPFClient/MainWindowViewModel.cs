@@ -26,10 +26,10 @@ namespace StrategoBeta.WPFClient
     {
         BlueWindow blueWindow;
         Team actualTeam;
-        bool first = true;
-        public bool InitialPlacement { get; set; } = true;
-        bool placed = true;
-        bool ReadyToPlace = false;
+        bool first;
+        public bool InitialPlacement { get; set; }
+        bool placed;
+        bool ReadyToPlace;
         int actualSelectedidx;
         int actualSelectedRow;
         int actualSelectedColumn;
@@ -68,6 +68,10 @@ namespace StrategoBeta.WPFClient
         }
         public MainWindowViewModel(BlueWindow bluewindow)
         {
+            first = true;
+            InitialPlacement = true;
+            placed = true;
+            ReadyToPlace = false;
             FillWithEmptyButtons();
             CommandSetup();
             actualTeam = Team.Blue;
@@ -107,7 +111,7 @@ namespace StrategoBeta.WPFClient
                     int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
 
                     //Calculates if a piece can move according to it's maximum step
-                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldCol, actualSelectedColumn, oldRow, actualSelectedRow))
+                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
                     {
                         PieceMoving(button, selectedIdx);
                         ReadyToPlace = false;
@@ -132,7 +136,6 @@ namespace StrategoBeta.WPFClient
                     {
                         //Sets the style for the button in the old position
                         SetStyle(button, Team.Empty);
-                        button.Background = null;
                         ReadyToPlace = true;
                     }
                 }
@@ -150,31 +153,31 @@ namespace StrategoBeta.WPFClient
                 );
             AddColonelCommand = new RelayCommand(
                 () => SelectColonel(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 8) <= 2
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 8) < 2
                 );
             AddMajorCommand = new RelayCommand(
                 () => SelectMajor(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 7) <= 3
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 7) < 3
                 );
             AddCaptainCommand = new RelayCommand(
                 () => SelectCaptain(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 6) <= 4
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 6) < 4
                 );
             AddLieutenantCommand = new RelayCommand(
                 () => SelectLieutenant(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 5) <= 4
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 5) < 4
                 );
             AddSergeantCommand = new RelayCommand(
                 () => SelectSergeant(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 4) <= 4
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 4) < 4
                 );
             AddMinerCommand = new RelayCommand(
                 () => SelectMiner(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 3) <= 5
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 3) < 5
                 );
             AddScoutCommand = new RelayCommand(
                 () => SelectScout(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 2) <= 8
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 2) < 8
                 );
             AddSpyCommand = new RelayCommand(
                 () => SelectSpy(),
@@ -182,7 +185,7 @@ namespace StrategoBeta.WPFClient
                 );
             AddMineCommand = new RelayCommand(
                 () => SelectMine(),
-                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 11) <= 6
+                () => Pieces.Where(piece => piece.Character.Team == actualTeam).Count(piece => piece.Character.RankPower == 11) < 6
                 );
             AddFlagCommand = new RelayCommand(
                 () => SelectFlag(),
@@ -453,12 +456,14 @@ namespace StrategoBeta.WPFClient
             else
             {
                 button.Style = blueWindow.FindResource("HiddenButton") as Style;
+                button.Background = null;
             }
         }
-        private bool CalcIfCanMove(Piece piece, int oldCol, int selectedCol, int oldRow, int actualSelectedRow)
+        private bool CalcIfCanMove(Piece piece, int oldRow,int oldCol)
         {
-            int calculatedStep = actualSelectedRow - oldRow;
-            if (selectedCol == oldCol && piece.Character.MaxStep >= Math.Abs(calculatedStep) && calculatedStep != 0)
+            int calculatedRow = Math.Abs(actualSelectedRow - oldRow);
+            int calculatedCol=Math.Abs(actualSelectedColumn- oldCol);
+            if (piece.Character.MaxStep >= calculatedRow || piece.Character.MaxStep>=calculatedCol)
             {
                 return true;
             }
