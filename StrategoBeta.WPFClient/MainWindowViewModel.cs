@@ -92,10 +92,26 @@ namespace StrategoBeta.WPFClient
             if (InitialPlacement && !placed)
             {
                 var index = (10 * (row - 1) + column) - 1;
-                Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
-                placed = true;
-                SelectedRank = Rank.Empty;
-                SetStyle(button, Pieces[index], actualTeam);
+                if (actualTeam == Team.Blue)
+                {
+                    if (Pieces[index].Character.Team == Team.Empty && row <= 4)
+                    {
+                        Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+                        placed = true;
+                        SelectedRank = Rank.Empty;
+                        SetStyle(button, Pieces[index], actualTeam);
+                    }
+                }
+                else
+                {
+                    if (Pieces[index].Character.Team == Team.Empty && row >= 7)
+                    {
+                        Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+                        placed = true;
+                        SelectedRank = Rank.Empty;
+                        SetStyle(button, Pieces[index], actualTeam);
+                    }
+                }
                 //AddPicture(Pieces[index], button, actualTeam);
             }
             else
