@@ -243,14 +243,11 @@ namespace StrategoBeta.WPFClient
         void FillWithEmptyButtons()
         {
             //Fills the Pieces collection with buttons so they show up in the window.
-            for (int i = 0; i < 12; i++)
+            for (int i = 1; i <= 10; i++)
             {
-                for (int j = 0; j < 12; j++)
+                for (int j = 1; j <= 10; j++)
                 {
-                    if (i >= 1 && i < 11 && j >= 1 && j < 11)
-                    {
                         Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty), i, j));
-                    }
                 }
             }
         }
