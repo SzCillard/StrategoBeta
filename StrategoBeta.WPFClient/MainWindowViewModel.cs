@@ -464,8 +464,8 @@ namespace StrategoBeta.WPFClient
         private bool CalcIfCanMove(Piece piece, int oldRow,int oldCol)
         {
             int calculatedRow = Math.Abs(actualSelectedRow - oldRow);
-            int calculatedCol=Math.Abs(actualSelectedColumn- oldCol);
-            if (piece.Character.MaxStep >= calculatedRow || piece.Character.MaxStep>=calculatedCol)
+            int calculatedCol = Math.Abs(actualSelectedColumn- oldCol);
+            if ((piece.Character.MaxStep >= calculatedRow && piece.Character.MaxStep>=calculatedCol) && (oldRow == actualSelectedRow || oldCol == actualSelectedColumn))
             {
                 return true;
             }
