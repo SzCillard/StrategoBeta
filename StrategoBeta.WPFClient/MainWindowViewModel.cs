@@ -96,7 +96,7 @@ namespace StrategoBeta.WPFClient
                 Pieces[index] = new Piece(new Character(SelectedRank, Team.Red), row, column);
                 placed = true;
                 SelectedRank = Rank.Empty;
-				SetStyle(Pieces[index], button);
+				SetStyle(Pieces[index], button, actualTeam);
             }
             else
             {
@@ -156,7 +156,7 @@ namespace StrategoBeta.WPFClient
 				Pieces[index] = new Piece(new Character(SelectedRank, Team.Blue), row, column);
 				placed = true;
 				SelectedRank = Rank.Empty;
-				SetStyle(Pieces[index], button);
+				SetStyle(Pieces[index], button, actualTeam);
             }
 			else 
 			{
@@ -210,7 +210,7 @@ namespace StrategoBeta.WPFClient
 				//Moves the piece to the selected position
 				Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
 				//Sets the style for the button in the new position
-				SetStyle(Pieces[selectedIdx],button);
+				SetStyle(Pieces[selectedIdx],button, Pieces[selectedIdx].Character.Team);
 				//Sets sets the old position to an empty character
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
             }
@@ -482,9 +482,8 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
-		private void SetStyle(Piece piece, Button button)
+		private void SetStyle(Piece piece, Button button, Team team)
 		{
-			Team team = piece.Character.Team;
 			if (team == Team.Blue)
 			{
                 button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
