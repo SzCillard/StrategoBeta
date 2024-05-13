@@ -35,6 +35,7 @@ namespace StrategoBeta.WPFClient
         int actualSelectedColumn;
         int oldRow;
         int oldCol;
+        Button oldButton;
         Rank selectedRank;
         public Rank SelectedRank
         {
@@ -129,6 +130,10 @@ namespace StrategoBeta.WPFClient
                     //Calculates if a piece can move according to it's maximum step
                     if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
                     {
+                        if (Pieces[selectedIdx].Character.Team == Team.Empty)
+                        {
+                            oldButton = button;
+                        }
                         PieceMoving(button, selectedIdx);
                         ReadyToPlace = false;
                     }
@@ -252,8 +257,13 @@ namespace StrategoBeta.WPFClient
             }
             else if (attacker.Character.RankPower > defender.Character.RankPower)
             {
-
-                Pieces[actualSelectedidx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                SetStyle(oldButton, Team.Empty);
+                int LosinIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                Pieces[LosinIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
+                //Sets the style of the new position of the winning piece
+                SetStyle(button, attacker, attacker.Character.Team);
+                //Sets the style of the old position of the winning piece
             }
             else
             {
