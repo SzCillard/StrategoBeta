@@ -95,8 +95,8 @@ namespace StrategoBeta.WPFClient
                 Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
                 placed = true;
                 SelectedRank = Rank.Empty;
-                SetStyle(button, actualTeam);
-                AddPicture(Pieces[index], button, actualTeam);
+                SetStyle(button, Pieces[index], actualTeam);
+                //AddPicture(Pieces[index], button, actualTeam);
             }
             else
             {
@@ -203,8 +203,8 @@ namespace StrategoBeta.WPFClient
                 //Moves the piece to the selected position
                 Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
                 //Sets the style for the button in the new position
-                SetStyle(button, Pieces[selectedIdx].Character.Team);
-                AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
+                SetStyle(button, Pieces[selectedIdx], Pieces[selectedIdx].Character.Team);
+                //AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
 
                 //Sets sets the old position to an empty character
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
@@ -357,7 +357,7 @@ namespace StrategoBeta.WPFClient
                 blueWindow.ChangeMenu();
             }
         }
-        public void AddPicture(Piece piece, Button button, Team team)
+        public void AddPicture(Button button, Piece piece,Team team)
         {
             if (team == Team.Blue)
             {
@@ -444,22 +444,25 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
-        private void SetStyle(Button button, Team team)
+        void SetStyle(Button button, Piece piece, Team team)
         {
             if (team == Team.Blue)
             {
                 button.Style = blueWindow.FindResource("BlueCharacterButton") as Style;
-
             }
             else if (team == Team.Red)
             {
                 button.Style = blueWindow.FindResource("RedCharacterButton") as Style;
             }
-            else
+            AddPicture(button, piece, team);
+        }
+        void SetStyle(Button button, Team team)
+        { 
+            if (team == Team.Empty) 
             {
-                button.Style = blueWindow.FindResource("HiddenButton") as Style;
-                button.Background = null;
-            }
+				button.Style = blueWindow.FindResource("HiddenButton") as Style;
+				button.Background = null;
+			} 
         }
         private bool CalcIfCanMove(Piece piece, int oldRow,int oldCol)
         {
