@@ -316,7 +316,7 @@
                     </Button>
                 </Grid>
             <Viewbox Grid.Row="4" Margin="4,1,4,1">
-                <Button Content="Ready" Grid.Row="0" Style="{StaticResource ReadyButton}" Command="{Binding ReadyCommand}"/>
+                <Button Content="Ready" Grid.Row="0" Style="{StaticResource ReadyButton}" Command="{Binding ReadyCommand}" IsEnabled="{Binding ReadyIsEnabled}"/>
             </Viewbox>
             <Viewbox Grid.Row="5" Margin="4,1,4,1">
                 <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurnCommand}"/>
