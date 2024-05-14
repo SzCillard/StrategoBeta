@@ -81,7 +81,6 @@ namespace StrategoBeta.WPFClient
             blueWindow.DataContext = this;
             blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
         }
-        //Manages blue window
         private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
         {
             // Gets the row and column of the button that was clicked
@@ -130,6 +129,7 @@ namespace StrategoBeta.WPFClient
                     //Calculates if a piece can move according to it's maximum step
                     if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
                     {
+                        //Keeps track of the button that was pressed 1 turn before
                         if (Pieces[selectedIdx].Character.Team == Team.Empty)
                         {
                             oldButton = button;
@@ -153,7 +153,7 @@ namespace StrategoBeta.WPFClient
                     {
 
                     }
-                    else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine)
+                    else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[actualSelectedidx].Character.Team != actualTeam)
                     {
 
                     }
@@ -253,17 +253,22 @@ namespace StrategoBeta.WPFClient
         {
             if (attacker.Character.RankPower < defender.Character.RankPower)
             {
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), actualSelectedRow, actualSelectedColumn);
+                //Sets the attackers to Empty
+                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                //Sets the style of the losing piece to empty
+                SetStyle(oldButton, Team.Empty);
             }
             else if (attacker.Character.RankPower > defender.Character.RankPower)
             {
+                //Sets the style (old position) of the winning piece
                 SetStyle(oldButton, Team.Empty);
-                int LosinIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
-                Pieces[LosinIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                int lostIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                //Moves the attacker to the defenders position
+                Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                //Sets the attackers original position to Empty
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
-                //Sets the style of the new position of the winning piece
+                //Sets the style (new position) of the winning piece
                 SetStyle(button, attacker, attacker.Character.Team);
-                //Sets the style of the old position of the winning piece
             }
             else
             {
@@ -357,9 +362,9 @@ namespace StrategoBeta.WPFClient
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        //Changes initialPlacement to True (finished placing down the pieces)
         private void Ready()
         {
+            //Changes initialPlacement to True (finished placing down the pieces)
             InitialPlacement = false;
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
@@ -387,7 +392,7 @@ namespace StrategoBeta.WPFClient
                 blueWindow.ChangeMenu();
             }
         }
-        public void AddPicture(Button button, Piece piece,Team team)
+        private void AddPicture(Button button, Piece piece,Team team)
         {
             if (team == Team.Blue)
             {
@@ -474,7 +479,7 @@ namespace StrategoBeta.WPFClient
                 }
             }
         }
-        void SetStyle(Button button, Piece piece, Team team)
+        private void SetStyle(Button button, Piece piece, Team team)
         {
             if (team == Team.Blue)
             {
@@ -486,7 +491,7 @@ namespace StrategoBeta.WPFClient
             }
             AddPicture(button, piece, team);
         }
-        void SetStyle(Button button, Team team)
+        private void SetStyle(Button button, Team team)
         { 
             if (team == Team.Empty) 
             {
