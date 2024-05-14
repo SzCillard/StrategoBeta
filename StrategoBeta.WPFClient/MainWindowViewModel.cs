@@ -101,34 +101,37 @@ namespace StrategoBeta.WPFClient
             Button button = e.button;
 
             //Only while pieces are being placed
-            if (InitialPlacement && !placed)
+            if (InitialPlacement)
             {
-                if (actualTeam is Team.Blue)
+                if (!placed)
                 {
-					if (row >= 7)
-					{
-                        var index = CalcPieceIndex(row, column);
-						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
-						placed = true;
-						SelectedRank = Rank.Empty;
-						SetStyle(button, Pieces[index], actualTeam);
-					}
+                    if (actualTeam is Team.Blue)
+                    {
+                        if (row >= 7)
+                        {
+                            var index = CalcPieceIndex(row, column);
+                            Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+                            placed = true;
+                            SelectedRank = Rank.Empty;
+                            SetStyle(button, Pieces[index], actualTeam);
+                        }
 
-				}
-                if (actualTeam is Team.Red)
-                {
-					if (row <=4)
-					{
-						var index = CalcPieceIndex(row, column);
-						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
-						placed = true;
-						SelectedRank = Rank.Empty;
-						SetStyle(button, Pieces[index], actualTeam);
-					}
-				}
-               
+                    }
+                    if (actualTeam is Team.Red)
+                    {
+                        if (row <= 4)
+                        {
+                            var index = CalcPieceIndex(row, column);
+                            Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+                            placed = true;
+                            SelectedRank = Rank.Empty;
+                            SetStyle(button, Pieces[index], actualTeam);
+                        }
+                    }
+
+                }
             }
-            else
+            else if(!InitialPlacement)
             {
                 //Movement
                 if (ReadyToPlace)
@@ -159,7 +162,7 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
                     //Calculates the index of the place where the piece was
-                    actualSelectedidx =CalcPieceIndex(oldRow, oldCol);
+                    actualSelectedidx = CalcPieceIndex(oldRow, oldCol);
 
                     //Selects the piece that will be moved
                     SelectedRank = Pieces[actualSelectedidx].Character.Rank;
@@ -336,19 +339,6 @@ namespace StrategoBeta.WPFClient
                     }					
 				}
             }
-            //foreach (Button button in blueWindow.playingField.Children.OfType<Button>())
-            //{
-            //    //Set the style of grid cell where it is LAKE
-            //    int row = Grid.GetRow(button);
-            //    int column = Grid.GetColumn(button);
-            //    if (row == 5 || row == 6)
-            //    {
-            //        if (column == 3 || column == 4 || column == 7 || column == 8)
-            //        {
-            //            button.Style = blueWindow.FindResource("LakeCharacterButton") as Style;
-            //        }
-            //    }
-            //}
         }
         //God forgive me for i have sinned (i do not feel proud of this)
         private void SelectMarshal()
