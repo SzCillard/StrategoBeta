@@ -269,6 +269,14 @@ namespace StrategoBeta.WPFClient
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
                 //Sets the style (new position) of the winning piece
                 SetStyle(button, attacker, attacker.Character.Team);
+                if (defender.Character.Rank == Rank.Flag)
+                {
+                    //If the flag is defeated the game ends and goes back to the menu
+                    MessageBox.Show($"{actualTeam} team won");
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    blueWindow.Close();
+                }
             }
             else
             {
