@@ -258,14 +258,15 @@ namespace StrategoBeta.WPFClient
             {
                 if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
                 {
-                    //Sets the style of the mine to empty
-                    SetStyle(button, Team.Empty);
-					int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
-					//Moves the attacker to the defenders position
-					Pieces[lostIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
-                    Pieces[actualSelectedidx] = new Piece(attacker.Character, attacker.Row, attacker.Column);
+                    //Sets the style (old position) of the winning piece
+                    SetStyle(oldButton, Team.Empty);
+                    int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+                    //Moves the attacker to the defenders position
+                    Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                    //Sets the attackers original position to Empty
+                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
                     //Sets the style (new position) of the winning piece
-                    SetStyle(oldButton, attacker, attacker.Character.Team);
+                    SetStyle(button, attacker, attacker.Character.Team);
                 }
                 else
                 {
