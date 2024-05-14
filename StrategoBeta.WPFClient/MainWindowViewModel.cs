@@ -45,6 +45,7 @@ namespace StrategoBeta.WPFClient
         int actualSelectedColumn;
         int oldRow;
         int oldCol;
+        int oldIdx;
         Button oldButton;
         Rank selectedRank;
         public Rank SelectedRank
@@ -145,17 +146,17 @@ namespace StrategoBeta.WPFClient
 						actualSelectedColumn = column;
 
 						//Calculates the place where the piece will move
-						int selectedIdx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
+						actualSelectedidx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
 
 						//Calculates if a piece can move according to it's maximum step
 						if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
 						{
 							//Keeps track of the button that was pressed 1 turn before
-							if (Pieces[selectedIdx].Character.Team == Team.Empty)
+							if (Pieces[actualSelectedidx].Character.Team == Team.Empty)
 							{
 								oldButton = button;
 							}
-							PieceMoving(button, selectedIdx);
+							PieceMoving(button, actualSelectedidx);
 							ReadyToPlace = false;
                             alreadyPlacedOne = true;
 						}
@@ -167,10 +168,10 @@ namespace StrategoBeta.WPFClient
 						oldCol = column;
 
 						//Calculates the index of the place where the piece was
-						actualSelectedidx = CalcPieceIndex(oldRow, oldCol);
+						oldIdx = CalcPieceIndex(oldRow, oldCol);
 
 						//Selects the piece that will be moved
-						SelectedRank = Pieces[actualSelectedidx].Character.Rank;
+						SelectedRank = Pieces[oldIdx].Character.Rank;
 						if (SelectedRank == Rank.Empty)
 						{
 
@@ -259,15 +260,15 @@ namespace StrategoBeta.WPFClient
             }
             else
             {
-                var index = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
-                bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
+                bool IsPieceFriendly = Pieces[actualSelectedidx].Character.Team.Equals(actualTeam);
                 if (IsPieceFriendly)
                 {
 
                 }
                 else
                 {
-                    Battle(Pieces[actualSelectedidx], Pieces[index], button);
+					oldIdx = CalcPieceIndex(oldRow, oldCol);
+					Battle(Pieces[oldIdx], Pieces[actualSelectedidx], button);
                 }
 
             }
@@ -284,14 +285,14 @@ namespace StrategoBeta.WPFClient
                     //Moves the attacker to the defenders position
                     Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
                     //Sets the attackers original position to Empty
-                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
                     //Sets the style (new position) of the winning piece
                     SetStyle(button, attacker, attacker.Character.Team);
                 }
                 else
                 {
                     //Sets the attackers to Empty
-                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
                     //Sets the style of the losing piece to empty
                     SetStyle(oldButton, Team.Empty);
                 }
