@@ -30,6 +30,15 @@ namespace StrategoBeta.WPFClient
         public bool InitialPlacement { get; set; }
         bool placed;
         bool ReadyToPlace;
+        bool readyIsEnabled;
+		public bool ReadyIsEnabled {
+            get 
+            { return readyIsEnabled; }
+            set 
+            { 
+                SetProperty(ref readyIsEnabled, value);
+                (ReadyCommand as RelayCommand).NotifyCanExecuteChanged();
+            } }
         int actualSelectedidx;
         int actualSelectedRow;
         int actualSelectedColumn;
@@ -74,7 +83,8 @@ namespace StrategoBeta.WPFClient
             placed = true;
             ReadyToPlace = false;
             CommandSetup();
-            actualTeam = Team.Blue;
+			ReadyIsEnabled = true;
+			actualTeam = Team.Blue;
             blueWindow = bluewindow;
 			blueWindow.DataContext = this;
 			FillWithEmptyButtons();
@@ -419,6 +429,7 @@ namespace StrategoBeta.WPFClient
             InitialPlacement = false;
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
+            ReadyIsEnabled = false;
         }
         private void EndTurn()
         {
@@ -434,6 +445,7 @@ namespace StrategoBeta.WPFClient
                     ReadyToPlace = false;
                     first = false;
                     selectedRank = Rank.Empty;
+                    ReadyIsEnabled = true;
                 }
             }
             else
@@ -567,5 +579,6 @@ namespace StrategoBeta.WPFClient
         { 
             return (10 * (row - 1) + col) - 1;
 		}
+
     }
 }
