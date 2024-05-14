@@ -280,9 +280,14 @@ namespace StrategoBeta.WPFClient
             }
             else
             {
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                //Claculates defender idx and sets the piece to empty
+                int idx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                SetStyle(oldButton, Team.Empty);
+                //Calculates attacker idx and sets the piece to empty
                 var index = (10 * (oldRow - 1) + oldCol) - 1;
-                Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                SetStyle(button, Team.Empty);
             }
 
         }
