@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StrategoBeta.WPFClient"
         mc:Ignorable="d"
-        Title="Stratego" Height="850" Width="1000">
+        Title="Stratego" Height="850" Width="1000" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
@@ -26,7 +26,8 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="2"/>
             <Setter Property="Margin" Value="4"/>
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Background" >
@@ -47,7 +48,8 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="2"/>
             <Setter Property="Margin" Value="4"/>
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="90"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Background">
@@ -205,15 +207,15 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Viewbox Grid.Row="0">
                 <Label Content="{Binding RemainingTime}" Margin="2" ContentStringFormat="Time left: {0} s" Style="{StaticResource ImportantText}"/>
-            </Grid>
-            <Grid Grid.Row="1">
+            </Viewbox>
+            <Viewbox Grid.Row="1">
                 <Label Content="Place a character" Margin="2" Style="{StaticResource ImportantText}"/>
-            </Grid>
-            <Grid Grid.Row="2">
+            </Viewbox>
+            <Viewbox Grid.Row="2">
                 <Label Content="{Binding SelectedRank}" Margin="2" Style="{StaticResource ImportantText}"/>
-            </Grid>
+            </Viewbox>
             <Grid Grid.Row="3" Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -313,12 +315,12 @@
                         </Button.Template>
                     </Button>
                 </Grid>
-            <Grid Grid.Row="4" Margin="4">
+            <Viewbox Grid.Row="4" Margin="4,1,4,1">
                 <Button Content="Ready" Grid.Row="0" Style="{StaticResource ReadyButton}" Command="{Binding ReadyCommand}"/>
-            </Grid>
-            <Grid Grid.Row="5" Margin="4">
+            </Viewbox>
+            <Viewbox Grid.Row="5" Margin="4,1,4,1">
                 <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurnCommand}"/>
-            </Grid>
+            </Viewbox>
         </Grid>
     </Grid>
 </Window>
