@@ -316,25 +316,30 @@ namespace StrategoBeta.WPFClient
             {
                 for (int j = 1; j <= 10; j++)
                 {
-                    Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty), i, j));
-					
-					
+                    if ((i == 5 || i == 6) && (j == 3 || j == 4 || j == 7 || j == 8))
+                    {
+                        Pieces.Add(new Piece(new Character(Rank.Lake, Team.Lake, blueWindow.FindResource("LakeCharacterButton") as Style), i, j));
+                    }
+                    else
+                    {
+                        Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), i, j));
+                    }					
 				}
             }
-			//foreach (Button button in blueWindow.playingField.Children.OfType<Button>())
-			//{
-			//	//Set the style of grid cell where it is LAKE
-			//	int row = Grid.GetRow(button);
-			//	int column = Grid.GetColumn(button);
-			//	if (row == 5 || row == 6)
-			//	{
-			//		if (column==3 || column==4 || column==7 || column==8)
-			//		{
-            //          button.Style = blueWindow.FindResource("LakeCharacterButton") as Style;
-			//		}
-			//	}
-			//}
-		}
+            //foreach (Button button in blueWindow.playingField.Children.OfType<Button>())
+            //{
+            //    //Set the style of grid cell where it is LAKE
+            //    int row = Grid.GetRow(button);
+            //    int column = Grid.GetColumn(button);
+            //    if (row == 5 || row == 6)
+            //    {
+            //        if (column == 3 || column == 4 || column == 7 || column == 8)
+            //        {
+            //            button.Style = blueWindow.FindResource("LakeCharacterButton") as Style;
+            //        }
+            //    }
+            //}
+        }
         //God forgive me for i have sinned (i do not feel proud of this)
         private void SelectMarshal()
         {
