@@ -50,7 +50,7 @@
             <Setter Property="Width" Value="100"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="Background" >
+            <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
                         <GradientStop Color="GreenYellow"  Offset="0.2"/>
@@ -62,7 +62,7 @@
         </Style>
         <Style x:Key="BlueCharacterButton" TargetType="Button">
             <Setter Property="BorderBrush" Value="DarkBlue"/>
-            <Setter Property="BorderThickness" Value="5,5,5,5"/>
+            <Setter Property="BorderThickness" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -85,7 +85,7 @@
         </Style>
         <Style x:Key="RedCharacterButton" TargetType="Button">
             <Setter Property="BorderBrush" Value="DarkRed"/>
-            <Setter Property="BorderThickness" Value="5,5,5,5"/>
+            <Setter Property="BorderThickness" Value="5"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -199,18 +199,22 @@
         <Grid Grid.Column="1" Background="BurlyWood">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Margin="4">
-                <StackPanel>
-                    <Label Content="{Binding RemainingTime}" Margin="2" ContentStringFormat="Time left: {0} s" Style="{StaticResource ImportantText}"/>
-                    <Label Content="Place a character" Margin="2" Style="{StaticResource ImportantText}"/>
-                    <Label Content="{Binding SelectedRank}" Margin="2" Style="{StaticResource ImportantText}"/>
-                </StackPanel>
-               
-            </Grid>    
-            <Grid Grid.Row="1" Margin="4">
+            <Grid Grid.Row="0">
+                <Label Content="{Binding RemainingTime}" Margin="2" ContentStringFormat="Time left: {0} s" Style="{StaticResource ImportantText}"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Label Content="Place a character" Margin="2" Style="{StaticResource ImportantText}"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Label Content="{Binding SelectedRank}" Margin="2" Style="{StaticResource ImportantText}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
@@ -309,12 +313,10 @@
                         </Button.Template>
                     </Button>
                 </Grid>
-            <Grid Grid.Row="2" Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
+            <Grid Grid.Row="4" Margin="4">
                 <Button Content="Ready" Grid.Row="0" Style="{StaticResource ReadyButton}" Command="{Binding ReadyCommand}"/>
+            </Grid>
+            <Grid Grid.Row="5" Margin="4">
                 <Button Content="End Turn" Grid.Row="1" Style="{StaticResource EndTurnButton}" Command="{Binding EndTurnCommand}"/>
             </Grid>
         </Grid>
