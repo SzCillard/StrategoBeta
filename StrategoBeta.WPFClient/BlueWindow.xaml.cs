@@ -47,7 +47,7 @@ namespace StrategoBeta.WPFClient
 				this.button = button;
 			}
 		}
-
+        //TODO lefut mielott lefutna a viewmodel FillEmpty...metodusa
 		private void SubscribeToButtonClickEvents()
 		{
             foreach (var button in playingField.Children.OfType<Button>())
@@ -173,5 +173,6 @@ namespace StrategoBeta.WPFClient
                 btnImage.Source = new BitmapImage(new Uri(@"Images/blue_bomb.png", UriKind.Relative));
             }
         }
-    }
+
+	}
 }

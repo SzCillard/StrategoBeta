@@ -68,20 +68,21 @@ namespace StrategoBeta.WPFClient
         }
         public MainWindowViewModel(BlueWindow bluewindow)
         {
-            first = true;
+			first = true;
             InitialPlacement = true;
             placed = true;
             ReadyToPlace = false;
-            FillWithEmptyButtons();
             CommandSetup();
             actualTeam = Team.Blue;
             blueWindow = bluewindow;
-            blueWindow.Show();
-            blueWindow.DataContext = this;
-            blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
-        }
-        //Manages blue window
-        private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
+			blueWindow.DataContext = this;
+			FillWithEmptyButtons();
+			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
+			blueWindow.Show();
+
+		}
+		//Manages blue window
+		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
         {
             // Gets the row and column of the button that was clicked
             int row = e.Row;
@@ -91,12 +92,30 @@ namespace StrategoBeta.WPFClient
             //Only while pieces are being placed
             if (InitialPlacement && !placed)
             {
-                var index = (10 * (row - 1) + column) - 1;
-                Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
-                placed = true;
-                SelectedRank = Rank.Empty;
-                SetStyle(button, Pieces[index], actualTeam);
-                //AddPicture(Pieces[index], button, actualTeam);
+                if (actualTeam is Team.Blue)
+                {
+					if (row >= 7)
+					{
+						var index = (10 * (row - 1) + column) - 1;
+						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+						placed = true;
+						SelectedRank = Rank.Empty;
+						SetStyle(button, Pieces[index], actualTeam);
+					}
+
+				}
+                if (actualTeam is Team.Red)
+                {
+					if (row <=4)
+					{
+						var index = (10 * (row - 1) + column) - 1;
+						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
+						placed = true;
+						SelectedRank = Rank.Empty;
+						SetStyle(button, Pieces[index], actualTeam);
+					}
+				}
+               
             }
             else
             {
@@ -204,7 +223,6 @@ namespace StrategoBeta.WPFClient
                 Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
                 //Sets the style for the button in the new position
                 SetStyle(button, Pieces[selectedIdx], Pieces[selectedIdx].Character.Team);
-                //AddPicture(Pieces[selectedIdx], button, Pieces[selectedIdx].Character.Team);
 
                 //Sets sets the old position to an empty character
                 Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
@@ -250,10 +268,25 @@ namespace StrategoBeta.WPFClient
             {
                 for (int j = 1; j <= 10; j++)
                 {
-                        Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty), i, j));
-                }
+                    Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty), i, j));
+					
+					
+				}
             }
-        }
+			//foreach (Button button in blueWindow.playingField.Children.OfType<Button>())
+			//{
+			//	//Set the style of grid cell where it is LAKE
+			//	int row = Grid.GetRow(button);
+			//	int column = Grid.GetColumn(button);
+			//	if (row == 5 || row == 6)
+			//	{
+			//		if (column==3 || column==4 || column==7 || column==8)
+			//		{
+            //          button.Style = blueWindow.FindResource("LakeCharacterButton") as Style;
+			//		}
+			//	}
+			//}
+		}
         //God forgive me for i have sinned (i do not feel proud of this)
         private void SelectMarshal()
         {
