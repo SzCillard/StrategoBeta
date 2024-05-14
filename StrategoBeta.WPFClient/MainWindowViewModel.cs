@@ -37,8 +37,8 @@ namespace StrategoBeta.WPFClient
             set 
             { 
                 SetProperty(ref readyIsEnabled, value);
-                (ReadyCommand as RelayCommand).NotifyCanExecuteChanged();
-            } }
+            } 
+        }
         int actualSelectedidx;
         int actualSelectedRow;
         int actualSelectedColumn;
