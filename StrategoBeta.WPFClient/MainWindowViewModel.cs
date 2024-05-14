@@ -97,7 +97,7 @@ namespace StrategoBeta.WPFClient
                 {
 					if (row >= 7)
 					{
-						var index = (10 * (row - 1) + column) - 1;
+                        var index = CalcPieceIndex(row, column);
 						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
 						placed = true;
 						SelectedRank = Rank.Empty;
@@ -109,7 +109,7 @@ namespace StrategoBeta.WPFClient
                 {
 					if (row <=4)
 					{
-						var index = (10 * (row - 1) + column) - 1;
+						var index = CalcPieceIndex(row, column);
 						Pieces[index] = new Piece(new Character(SelectedRank, actualTeam), row, column);
 						placed = true;
 						SelectedRank = Rank.Empty;
@@ -239,7 +239,7 @@ namespace StrategoBeta.WPFClient
             }
             else
             {
-                var index = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
+                var index = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
                 bool IsPieceFriendly = Pieces[index].Character.Team.Equals(actualTeam);
                 if (IsPieceFriendly)
                 {
@@ -260,9 +260,9 @@ namespace StrategoBeta.WPFClient
                 {
                     //Sets the style of the mine to empty
                     SetStyle(button, Team.Empty);
-                    int lostIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
-                    //Moves the attacker to the defenders position
-                    Pieces[lostIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+					int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+					//Moves the attacker to the defenders position
+					Pieces[lostIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
                     Pieces[actualSelectedidx] = new Piece(attacker.Character, attacker.Row, attacker.Column);
                     //Sets the style (new position) of the winning piece
                     SetStyle(oldButton, attacker, attacker.Character.Team);
@@ -279,7 +279,7 @@ namespace StrategoBeta.WPFClient
             {
                 //Sets the style (old position) of the winning piece
                 SetStyle(oldButton, Team.Empty);
-                int lostIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
                 //Moves the attacker to the defenders position
                 Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
                 //Sets the attackers original position to Empty
@@ -298,12 +298,12 @@ namespace StrategoBeta.WPFClient
             else
             {
                 //Claculates defender idx and sets the piece to empty
-                int idx = (10 * (defender.Row - 1) + defender.Column) - 1;
-                Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                int attackerIdx = CalcPieceIndex(defender.Row, defender.Column);
+				Pieces[attackerIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
                 SetStyle(oldButton, Team.Empty);
                 //Calculates attacker idx and sets the piece to empty
-                var index = (10 * (oldRow - 1) + oldCol) - 1;
-                Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                var defenderIdx = CalcPieceIndex(oldRow, oldCol);
+				Pieces[defenderIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
                 SetStyle(button, Team.Empty);
             }
 
@@ -557,5 +557,9 @@ namespace StrategoBeta.WPFClient
                 return false;
             }
         }
+        int CalcPieceIndex(int row,int col) 
+        { 
+            return (10 * (row - 1) + col) - 1;
+		}
     }
 }
