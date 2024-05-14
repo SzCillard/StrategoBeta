@@ -29,6 +29,7 @@ namespace StrategoBeta.WPFClient
         bool first;
         public bool InitialPlacement { get; set; }
         bool placed;
+        bool alreadyPlacedOne;
         bool ReadyToPlace;
         bool readyIsEnabled;
 		public bool ReadyIsEnabled {
@@ -81,6 +82,7 @@ namespace StrategoBeta.WPFClient
 			first = true;
             InitialPlacement = true;
             placed = true;
+            alreadyPlacedOne = false;
             ReadyToPlace = false;
             CommandSetup();
 			ReadyIsEnabled = true;
@@ -130,54 +132,59 @@ namespace StrategoBeta.WPFClient
             }
             else
             {
-                //Movement
-                if (ReadyToPlace)
-                {
-                    //Sets the value of the variables to the position where the piece will move
-                    actualSelectedRow = row;
-                    actualSelectedColumn = column;
+                if (!alreadyPlacedOne)
+				{   
+                    //Movement
+					if (ReadyToPlace)
+					{
+						//Sets the value of the variables to the position where the piece will move
+						actualSelectedRow = row;
+						actualSelectedColumn = column;
 
-                    //Calculates the place where the piece will move
-                    int selectedIdx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
+						//Calculates the place where the piece will move
+						int selectedIdx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
 
-                    //Calculates if a piece can move according to it's maximum step
-                    if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
-                    {
-                        //Keeps track of the button that was pressed 1 turn before
-                        if (Pieces[selectedIdx].Character.Team == Team.Empty)
-                        {
-                            oldButton = button;
-                        }
-                        PieceMoving(button, selectedIdx);
-                        ReadyToPlace = false;
-                    }
-                }
-                else
-                {
-                    //Sets the value of the variables to the position where the piece moved from
-                    oldRow = row;
-                    oldCol = column;
+						//Calculates if a piece can move according to it's maximum step
+						if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
+						{
+							//Keeps track of the button that was pressed 1 turn before
+							if (Pieces[selectedIdx].Character.Team == Team.Empty)
+							{
+								oldButton = button;
+							}
+							PieceMoving(button, selectedIdx);
+							ReadyToPlace = false;
+                            alreadyPlacedOne = true;
+						}
+					}
+					else
+					{
+						//Sets the value of the variables to the position where the piece moved from
+						oldRow = row;
+						oldCol = column;
 
-                    //Calculates the index of the place where the piece was
-                    actualSelectedidx =CalcPieceIndex(oldRow, oldCol);
+						//Calculates the index of the place where the piece was
+						actualSelectedidx = CalcPieceIndex(oldRow, oldCol);
 
-                    //Selects the piece that will be moved
-                    SelectedRank = Pieces[actualSelectedidx].Character.Rank;
-                    if (SelectedRank == Rank.Empty)
-                    {
+						//Selects the piece that will be moved
+						SelectedRank = Pieces[actualSelectedidx].Character.Rank;
+						if (SelectedRank == Rank.Empty)
+						{
 
-                    }
-                    else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[actualSelectedidx].Character.Team != actualTeam)
-                    {
+						}
+						else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[actualSelectedidx].Character.Team != actualTeam)
+						{
 
-                    }
-                    else
-                    {
-                        //Sets the style for the button in the old position
-                        SetStyle(button, Team.Empty);
-                        ReadyToPlace = true;
-                    }
-                }
+						}
+						else
+						{
+							//Sets the style for the button in the old position
+							SetStyle(button, Team.Empty);
+							ReadyToPlace = true;
+						}
+					}
+				}
+                
             }
         }
         void CommandSetup()
@@ -437,7 +444,6 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Red;
                 blueWindow.Title = "Red";
-                blueWindow.ChangeMenu();
                 if (first)
                 {
                     InitialPlacement = true;
@@ -452,10 +458,11 @@ namespace StrategoBeta.WPFClient
             {
                 actualTeam = Team.Blue;
                 blueWindow.Title = "Blue";
-                blueWindow.ChangeMenu();
             }
-        }
-        private void AddPicture(Button button, Piece piece,Team team)
+			blueWindow.ChangeMenu();
+            alreadyPlacedOne= false;
+		}
+		private void AddPicture(Button button, Piece piece,Team team)
         {
             if (team == Team.Blue)
             {
