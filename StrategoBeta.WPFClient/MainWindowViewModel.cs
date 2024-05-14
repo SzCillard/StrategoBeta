@@ -291,9 +291,8 @@ namespace StrategoBeta.WPFClient
                 else
                 {
                     //Sets the attackers to Empty
-                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), attacker.Row, attacker.Column);
                     //Sets the style of the losing piece to empty
-                    SetStyle(oldButton, Team.Empty);
                 }
             }
             else if (attacker.Character.RankPower > defender.Character.RankPower)
