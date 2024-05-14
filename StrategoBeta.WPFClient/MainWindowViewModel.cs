@@ -128,7 +128,7 @@ namespace StrategoBeta.WPFClient
                     actualSelectedColumn = column;
 
                     //Calculates the place where the piece will move
-                    int selectedIdx = (10 * (actualSelectedRow - 1) + actualSelectedColumn) - 1;
+                    int selectedIdx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
 
                     //Calculates if a piece can move according to it's maximum step
                     if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
@@ -149,7 +149,7 @@ namespace StrategoBeta.WPFClient
                     oldCol = column;
 
                     //Calculates the index of the place where the piece was
-                    actualSelectedidx = (10 * (oldRow - 1) + oldCol) - 1;
+                    actualSelectedidx =CalcPieceIndex(oldRow, oldCol);
 
                     //Selects the piece that will be moved
                     SelectedRank = Pieces[actualSelectedidx].Character.Rank;
