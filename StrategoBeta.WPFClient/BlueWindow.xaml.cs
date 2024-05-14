@@ -80,7 +80,7 @@ namespace StrategoBeta.WPFClient
 
                 ct = buttonSpy.Template;
                 btnImage = (Image)ct.FindName("buttonSpyIMG", buttonSpy);
-                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece9.png", UriKind.Relative));
+                btnImage.Source = new BitmapImage(new Uri(@"Images/redPiece10.png", UriKind.Relative));
 
                 ct = buttonScout.Template;
                 btnImage = (Image)ct.FindName("buttonScoutIMG", buttonScout);
@@ -130,7 +130,7 @@ namespace StrategoBeta.WPFClient
 
                 ct = buttonSpy.Template;
                 btnImage = (Image)ct.FindName("buttonSpyIMG", buttonSpy);
-                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece9.png", UriKind.Relative));
+                btnImage.Source = new BitmapImage(new Uri(@"Images/bluePiece10.png", UriKind.Relative));
 
                 ct = buttonScout.Template;
                 btnImage = (Image)ct.FindName("buttonScoutIMG", buttonScout);

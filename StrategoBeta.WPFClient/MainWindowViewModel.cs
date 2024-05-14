@@ -35,6 +35,7 @@ namespace StrategoBeta.WPFClient
         int actualSelectedColumn;
         int oldRow;
         int oldCol;
+        Button oldButton;
         Rank selectedRank;
         public Rank SelectedRank
         {
@@ -132,6 +133,11 @@ namespace StrategoBeta.WPFClient
                     //Calculates if a piece can move according to it's maximum step
                     if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
                     {
+                        //Keeps track of the button that was pressed 1 turn before
+                        if (Pieces[selectedIdx].Character.Team == Team.Empty)
+                        {
+                            oldButton = button;
+                        }
                         PieceMoving(button, selectedIdx);
                         ReadyToPlace = false;
                     }
@@ -148,6 +154,10 @@ namespace StrategoBeta.WPFClient
                     //Selects the piece that will be moved
                     SelectedRank = Pieces[actualSelectedidx].Character.Rank;
                     if (SelectedRank == Rank.Empty)
+                    {
+
+                    }
+                    else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[actualSelectedidx].Character.Team != actualTeam)
                     {
 
                     }
@@ -246,18 +256,55 @@ namespace StrategoBeta.WPFClient
         {
             if (attacker.Character.RankPower < defender.Character.RankPower)
             {
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), actualSelectedRow, actualSelectedColumn);
+                if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
+                {
+                    //Sets the style of the mine to empty
+                    SetStyle(button, Team.Empty);
+                    int lostIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                    //Moves the attacker to the defenders position
+                    Pieces[lostIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                    Pieces[actualSelectedidx] = new Piece(attacker.Character, attacker.Row, attacker.Column);
+                    //Sets the style (new position) of the winning piece
+                    SetStyle(oldButton, attacker, attacker.Character.Team);
+                }
+                else
+                {
+                    //Sets the attackers to Empty
+                    Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                    //Sets the style of the losing piece to empty
+                    SetStyle(oldButton, Team.Empty);
+                }
             }
             else if (attacker.Character.RankPower > defender.Character.RankPower)
             {
-
-                Pieces[actualSelectedidx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                //Sets the style (old position) of the winning piece
+                SetStyle(oldButton, Team.Empty);
+                int lostIdx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                //Moves the attacker to the defenders position
+                Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                //Sets the attackers original position to Empty
+                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
+                //Sets the style (new position) of the winning piece
+                SetStyle(button, attacker, attacker.Character.Team);
+                if (defender.Character.Rank == Rank.Flag)
+                {
+                    //If the flag is defeated the game ends and goes back to the menu
+                    MessageBox.Show($"{actualTeam} team won");
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    blueWindow.Close();
+                }
             }
             else
             {
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                //Claculates defender idx and sets the piece to empty
+                int idx = (10 * (defender.Row - 1) + defender.Column) - 1;
+                Pieces[idx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                SetStyle(oldButton, Team.Empty);
+                //Calculates attacker idx and sets the piece to empty
                 var index = (10 * (oldRow - 1) + oldCol) - 1;
-                Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                Pieces[index] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                SetStyle(button, Team.Empty);
             }
 
         }
@@ -360,9 +407,9 @@ namespace StrategoBeta.WPFClient
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        //Changes initialPlacement to True (finished placing down the pieces)
         private void Ready()
         {
+            //Changes initialPlacement to True (finished placing down the pieces)
             InitialPlacement = false;
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
@@ -390,7 +437,7 @@ namespace StrategoBeta.WPFClient
                 blueWindow.ChangeMenu();
             }
         }
-        public void AddPicture(Button button, Piece piece,Team team)
+        private void AddPicture(Button button, Piece piece,Team team)
         {
             if (team == Team.Blue)
             {
@@ -504,10 +551,6 @@ namespace StrategoBeta.WPFClient
             if ((piece.Character.MaxStep >= calculatedRow && piece.Character.MaxStep>=calculatedCol) && (oldRow == actualSelectedRow || oldCol == actualSelectedColumn))
             {
                 return true;
-            }
-            else if(piece.Character.Rank == Rank.Flag || piece.Character.Rank == Rank.Mine)
-            {
-                return false;
             }
             else
             {
