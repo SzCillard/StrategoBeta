@@ -426,6 +426,7 @@ namespace StrategoBeta.WPFClient
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
             ReadyIsEnabled = false;
+            EndTurn();
         }
         private void EndTurn()
         {
