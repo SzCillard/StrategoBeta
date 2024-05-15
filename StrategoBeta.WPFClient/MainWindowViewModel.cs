@@ -32,13 +32,14 @@ namespace StrategoBeta.WPFClient
         bool alreadyPlacedOne;
         bool ReadyToPlace;
         bool readyIsEnabled;
-		public bool ReadyIsEnabled {
-            get 
+        public bool ReadyIsEnabled
+        {
+            get
             { return readyIsEnabled; }
-            set 
-            { 
+            set
+            {
                 SetProperty(ref readyIsEnabled, value);
-            } 
+            }
         }
         int actualSelectedidx;
         int actualSelectedRow;
@@ -80,23 +81,23 @@ namespace StrategoBeta.WPFClient
         }
         public MainWindowViewModel(BlueWindow bluewindow)
         {
-			first = true;
+            first = true;
             InitialPlacement = true;
             placed = true;
             alreadyPlacedOne = false;
             ReadyToPlace = false;
             CommandSetup();
-			ReadyIsEnabled = true;
-			actualTeam = Team.Blue;
+            ReadyIsEnabled = true;
+            actualTeam = Team.Blue;
             blueWindow = bluewindow;
-			blueWindow.DataContext = this;
-			FillWithEmptyButtons();
-			blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
-			blueWindow.Show();
+            blueWindow.DataContext = this;
+            FillWithEmptyButtons();
+            blueWindow.ButtonClickedEvent += ClickOnPlayingFieldEvent;
+            blueWindow.Show();
 
-		}
-		//Manages blue window
-		void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
+        }
+        //Manages blue window
+        void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
         {
             // Gets the row and column of the button that was clicked
             int row = e.Row;
@@ -134,61 +135,61 @@ namespace StrategoBeta.WPFClient
 
                 }
             }
-            else if(!InitialPlacement)
+            else if (!InitialPlacement)
             {
                 if (!alreadyPlacedOne)
-				{   
+                {
                     //Movement
-					if (ReadyToPlace)
-					{
-						//Sets the value of the variables to the position where the piece will move
-						actualSelectedRow = row;
-						actualSelectedColumn = column;
+                    if (ReadyToPlace)
+                    {
+                        //Sets the value of the variables to the position where the piece will move
+                        actualSelectedRow = row;
+                        actualSelectedColumn = column;
 
-						//Calculates the place where the piece will move
-						actualSelectedidx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
+                        //Calculates the place where the piece will move
+                        actualSelectedidx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
 
-						//Calculates if a piece can move according to it's maximum step
-						if (CalcIfCanMove(Pieces[oldIdx]))
-						{
-							//Keeps track of the button that was pressed 1 turn before
-							if (Pieces[actualSelectedidx].Character.Team == Team.Empty)
-							{
-								oldButton = button;
-							}
-							PieceMoving(button);
-							ReadyToPlace = false;
+                        //Calculates if a piece can move according to it's maximum step
+                        if (CalcIfCanMove(Pieces[oldIdx]))
+                        {
+                            //Keeps track of the button that was pressed 1 turn before
+                            if (Pieces[actualSelectedidx].Character.Team == Team.Empty)
+                            {
+                                oldButton = button;
+                            }
+                            PieceMoving(button);
+                            ReadyToPlace = false;
                             alreadyPlacedOne = true;
-						}
-					}
-					else
-					{
-						//Sets the value of the variables to the position where the piece moved from
-						oldRow = row;
-						oldCol = column;
+                        }
+                    }
+                    else
+                    {
+                        //Sets the value of the variables to the position where the piece moved from
+                        oldRow = row;
+                        oldCol = column;
 
-						//Calculates the index of the place where the piece was
-						oldIdx = CalcPieceIndex(oldRow, oldCol);
+                        //Calculates the index of the place where the piece was
+                        oldIdx = CalcPieceIndex(oldRow, oldCol);
 
-						//Selects the piece that will be moved
-						SelectedRank = Pieces[oldIdx].Character.Rank;
-						if (SelectedRank == Rank.Empty)
-						{
+                        //Selects the piece that will be moved
+                        SelectedRank = Pieces[oldIdx].Character.Rank;
+                        if (SelectedRank == Rank.Empty)
+                        {
 
-						}
-						else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[oldIdx].Character.Team != actualTeam)
-						{
+                        }
+                        else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[oldIdx].Character.Team != actualTeam)
+                        {
 
-						}
-						else
-						{
-							//Sets the style for the button in the old position
-							SetStyle(button, Team.Empty);
-							ReadyToPlace = true;
-						}
-					}
-				}
-                
+                        }
+                        else
+                        {
+                            //Sets the style for the button in the old position
+                            SetStyle(button, Team.Empty);
+                            ReadyToPlace = true;
+                        }
+                    }
+                }
+
             }
         }
         void CommandSetup()
@@ -267,69 +268,69 @@ namespace StrategoBeta.WPFClient
                 }
                 else
                 {
-					oldIdx = CalcPieceIndex(oldRow, oldCol);
-					Battle(Pieces[oldIdx], Pieces[actualSelectedidx], button);
+                    oldIdx = CalcPieceIndex(oldRow, oldCol);
+                    Battle(Pieces[oldIdx], Pieces[actualSelectedidx], button);
                 }
 
             }
         }
-		void Battle(Piece attacker, Piece defender, Button button)
-		{
-			if (attacker.Character.RankPower < defender.Character.RankPower)
-			{
-				if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
-				{
-					//Sets the style (old position) of the winning piece
-					SetStyle(oldButton, Team.Empty);
-					int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
-					//Moves the attacker to the defenders position
-					Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
-					//Sets the attackers original position to Empty
-					Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-					//Sets the style (new position) of the winning piece
-					SetStyle(button, attacker, attacker.Character.Team);
-				}
-				else
-				{
-					//Sets the attackers to Empty
-					Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), attacker.Row, attacker.Column);
-					//Sets the style of the losing piece to empty
-				}
-			}
-			else if (attacker.Character.RankPower > defender.Character.RankPower)
-			{
-				//Sets the style (old position) of the winning piece
-				SetStyle(oldButton, Team.Empty);
-				int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
-				//Moves the attacker to the defenders position
-				Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
-				//Sets the attackers original position to Empty
-				Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-				//Sets the style (new position) of the winning piece
-				SetStyle(button, attacker, attacker.Character.Team);
-				if (defender.Character.Rank == Rank.Flag)
-				{
-					//If the flag is defeated the game ends and goes back to the menu
-					MessageBox.Show($"{actualTeam} team won");
-					MainWindow mainWindow = new MainWindow();
-					mainWindow.Show();
-					blueWindow.Close();
-				}
-			}
-			else
-			{
-				//Claculates defender idx and sets the piece to empty
-				int attackerIdx = CalcPieceIndex(defender.Row, defender.Column);
-				Pieces[attackerIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
-				SetStyle(oldButton, Team.Empty);
-				//Calculates attacker idx and sets the piece to empty
-				var defenderIdx = CalcPieceIndex(oldRow, oldCol);
-				Pieces[defenderIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-				SetStyle(button, Team.Empty);
-			}
+        void Battle(Piece attacker, Piece defender, Button button)
+        {
+            if (attacker.Character.RankPower < defender.Character.RankPower)
+            {
+                if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
+                {
+                    //Sets the style (old position) of the winning piece
+                    SetStyle(oldButton, Team.Empty);
+                    int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+                    //Moves the attacker to the defenders position
+                    Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                    //Sets the attackers original position to Empty
+                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                    //Sets the style (new position) of the winning piece
+                    SetStyle(button, attacker, attacker.Character.Team);
+                }
+                else
+                {
+                    //Sets the attackers to Empty
+                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), attacker.Row, attacker.Column);
+                    //Sets the style of the losing piece to empty
+                }
+            }
+            else if (attacker.Character.RankPower > defender.Character.RankPower)
+            {
+                //Sets the style (old position) of the winning piece
+                SetStyle(oldButton, Team.Empty);
+                int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+                //Moves the attacker to the defenders position
+                Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+                //Sets the attackers original position to Empty
+                Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                //Sets the style (new position) of the winning piece
+                SetStyle(button, attacker, attacker.Character.Team);
+                if (defender.Character.Rank == Rank.Flag)
+                {
+                    //If the flag is defeated the game ends and goes back to the menu
+                    MessageBox.Show($"{actualTeam} team won");
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    blueWindow.Close();
+                }
+            }
+            else
+            {
+                //Claculates defender idx and sets the piece to empty
+                int attackerIdx = CalcPieceIndex(defender.Row, defender.Column);
+                Pieces[attackerIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
+                SetStyle(oldButton, Team.Empty);
+                //Calculates attacker idx and sets the piece to empty
+                var defenderIdx = CalcPieceIndex(oldRow, oldCol);
+                Pieces[defenderIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+                SetStyle(button, Team.Empty);
+            }
 
-		}
-		void FillWithEmptyButtons()
+        }
+        void FillWithEmptyButtons()
         {
             //Fills the Pieces collection with buttons so they show up in the window.
             for (int i = 1; i <= 10; i++)
@@ -343,84 +344,84 @@ namespace StrategoBeta.WPFClient
                     else
                     {
                         Pieces.Add(new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), i, j));
-                    }					
-				}
+                    }
+                }
             }
         }
         //God forgive me for i have sinned (i do not feel proud of this)
-        private void SelectMarshal()
+        void SelectMarshal()
         {
             SelectedRank = Rank.Marshal;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectGeneral()
+        void SelectGeneral()
         {
             SelectedRank = Rank.General;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectColonel()
+        void SelectColonel()
         {
             SelectedRank = Rank.Colonel;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectMajor()
+        void SelectMajor()
         {
             SelectedRank = Rank.Major;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectCaptain()
+        void SelectCaptain()
         {
             SelectedRank = Rank.Captain;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectLieutenant()
+        void SelectLieutenant()
         {
             SelectedRank = Rank.Lieutenant;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectSergeant()
+        void SelectSergeant()
         {
             SelectedRank = Rank.Sergeant;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectMiner()
+        void SelectMiner()
         {
             SelectedRank = Rank.Miner;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectScout()
+        void SelectScout()
         {
             SelectedRank = Rank.Scout;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectSpy()
+        void SelectSpy()
         {
             SelectedRank = Rank.Spy;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectMine()
+        void SelectMine()
         {
             SelectedRank = Rank.Mine;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void SelectFlag()
+        void SelectFlag()
         {
             SelectedRank = Rank.Flag;
             RankSelectionEvent?.Invoke(this, null);
             placed = false;
         }
-        private void Ready()
+        void Ready()
         {
             //Changes initialPlacement to True (finished placing down the pieces)
             InitialPlacement = false;
@@ -429,7 +430,7 @@ namespace StrategoBeta.WPFClient
             ReadyIsEnabled = false;
             EndTurn();
         }
-        private void EndTurn()
+        void EndTurn()
         {
             if (actualTeam is Team.Blue)
             {
@@ -450,10 +451,10 @@ namespace StrategoBeta.WPFClient
                 actualTeam = Team.Blue;
                 blueWindow.Title = "Blue";
             }
-			blueWindow.ChangeMenu();
-            alreadyPlacedOne= false;
-		}
-		private void AddPicture(Button button, Piece piece,Team team)
+            blueWindow.ChangeMenu();
+            alreadyPlacedOne = false;
+        }
+        void AddPicture(Button button, Piece piece, Team team)
         {
             if (team == Team.Blue)
             {
@@ -553,18 +554,18 @@ namespace StrategoBeta.WPFClient
             AddPicture(button, piece, team);
         }
         void SetStyle(Button button, Team team)
-        { 
-            if (team == Team.Empty) 
+        {
+            if (team == Team.Empty)
             {
-				button.Style = blueWindow.FindResource("HiddenButton") as Style;
-				button.Background = null;
-			} 
+                button.Style = blueWindow.FindResource("HiddenButton") as Style;
+                button.Background = null;
+            }
         }
-        private bool CalcIfCanMove(Piece piece)
+        bool CalcIfCanMove(Piece piece)
         {
             int calculatedRow = Math.Abs(actualSelectedRow - oldRow);
-            int calculatedCol = Math.Abs(actualSelectedColumn- oldCol);
-            if ((piece.Character.MaxStep >= calculatedRow && piece.Character.MaxStep>=calculatedCol) && (oldRow == actualSelectedRow || oldCol == actualSelectedColumn))
+            int calculatedCol = Math.Abs(actualSelectedColumn - oldCol);
+            if ((piece.Character.MaxStep >= calculatedRow && piece.Character.MaxStep >= calculatedCol) && (oldRow == actualSelectedRow || oldCol == actualSelectedColumn))
             {
                 return true;
             }
@@ -573,9 +574,9 @@ namespace StrategoBeta.WPFClient
                 return false;
             }
         }
-        int CalcPieceIndex(int row,int col) 
-        { 
+        int CalcPieceIndex(int row, int col)
+        {
             return (10 * (row - 1) + col) - 1;
-		}
+        }
     }
 }
