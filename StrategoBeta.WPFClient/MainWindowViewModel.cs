@@ -156,7 +156,7 @@ namespace StrategoBeta.WPFClient
 							{
 								oldButton = button;
 							}
-							PieceMoving(button, actualSelectedidx);
+							PieceMoving(button);
 							ReadyToPlace = false;
                             alreadyPlacedOne = true;
 						}
@@ -244,19 +244,19 @@ namespace StrategoBeta.WPFClient
             ReadyCommand = new RelayCommand(() => Ready());
             EndTurnCommand = new RelayCommand(() => EndTurn());
         }
-        void PieceMoving(Button button, int selectedIdx)
+        void PieceMoving(Button button)
         {
             //Checks if the grid that the piece will move to is empty
-            bool gridIsEmpty = Pieces[selectedIdx].Character.Rank == Rank.Empty;
+            bool gridIsEmpty = Pieces[actualSelectedidx].Character.Rank == Rank.Empty;
             if (gridIsEmpty)
             {
                 //Moves the piece to the selected position
-                Pieces[selectedIdx] = new Piece(new Character(SelectedRank, Pieces[actualSelectedidx].Character.Team), actualSelectedRow, actualSelectedColumn);
+                Pieces[actualSelectedidx] = new Piece(Pieces[oldIdx].Character, actualSelectedRow, actualSelectedColumn);
                 //Sets the style for the button in the new position
-                SetStyle(button, Pieces[selectedIdx], Pieces[selectedIdx].Character.Team);
+                SetStyle(button, Pieces[actualSelectedidx], Pieces[actualSelectedidx].Character.Team);
 
-                //Sets sets the old position to an empty character
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
+                //Sets the old position to an empty character
+                Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), oldRow, oldCol);
             }
             else
             {
@@ -428,6 +428,7 @@ namespace StrategoBeta.WPFClient
             var a = Pieces;
             ReadyEvent?.Invoke(this, null);
             ReadyIsEnabled = false;
+            EndTurn();
         }
         private void EndTurn()
         {
