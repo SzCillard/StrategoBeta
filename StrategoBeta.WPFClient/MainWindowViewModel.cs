@@ -96,7 +96,7 @@ namespace StrategoBeta.WPFClient
 
 		}
 		//Manages blue window
-		private void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
+		void ClickOnPlayingFieldEvent(object? sender, BlueWindow.ButtonClickedEventArgs e)
         {
             // Gets the row and column of the button that was clicked
             int row = e.Row;
@@ -149,7 +149,7 @@ namespace StrategoBeta.WPFClient
 						actualSelectedidx = CalcPieceIndex(actualSelectedRow, actualSelectedColumn);
 
 						//Calculates if a piece can move according to it's maximum step
-						if (CalcIfCanMove(Pieces[actualSelectedidx], oldRow, oldCol))
+						if (CalcIfCanMove(Pieces[oldIdx]))
 						{
 							//Keeps track of the button that was pressed 1 turn before
 							if (Pieces[actualSelectedidx].Character.Team == Team.Empty)
@@ -305,7 +305,7 @@ namespace StrategoBeta.WPFClient
                 //Moves the attacker to the defenders position
                 Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
                 //Sets the attackers original position to Empty
-                Pieces[actualSelectedidx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
+                Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
                 //Sets the style (new position) of the winning piece
                 SetStyle(button, attacker, attacker.Character.Team);
                 if (defender.Character.Rank == Rank.Flag)
@@ -561,7 +561,7 @@ namespace StrategoBeta.WPFClient
 				button.Background = null;
 			} 
         }
-        private bool CalcIfCanMove(Piece piece, int oldRow,int oldCol)
+        private bool CalcIfCanMove(Piece piece)
         {
             int calculatedRow = Math.Abs(actualSelectedRow - oldRow);
             int calculatedCol = Math.Abs(actualSelectedColumn- oldCol);
@@ -578,6 +578,5 @@ namespace StrategoBeta.WPFClient
         { 
             return (10 * (row - 1) + col) - 1;
 		}
-
     }
 }
