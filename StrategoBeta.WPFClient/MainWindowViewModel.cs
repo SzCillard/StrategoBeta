@@ -273,64 +273,63 @@ namespace StrategoBeta.WPFClient
 
             }
         }
-        void Battle(Piece attacker, Piece defender, Button button)
-        {
-            if (attacker.Character.RankPower < defender.Character.RankPower)
-            {
-                if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
-                {
-                    //Sets the style (old position) of the winning piece
-                    SetStyle(oldButton, Team.Empty);
-                    int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
-                    //Moves the attacker to the defenders position
-                    Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
-                    //Sets the attackers original position to Empty
-                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-                    //Sets the style (new position) of the winning piece
-                    SetStyle(button, attacker, attacker.Character.Team);
-                }
-                else
-                {
-                    //Sets the attackers to Empty
-                    Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-                    //Sets the style of the losing piece to empty
-                    SetStyle(oldButton, Team.Empty);
-                }
-            }
-            else if (attacker.Character.RankPower > defender.Character.RankPower)
-            {
-                //Sets the style (old position) of the winning piece
-                SetStyle(oldButton, Team.Empty);
-                int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
-                //Moves the attacker to the defenders position
-                Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
-                //Sets the attackers original position to Empty
-                Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row,attacker.Column);
-                //Sets the style (new position) of the winning piece
-                SetStyle(button, attacker, attacker.Character.Team);
-                if (defender.Character.Rank == Rank.Flag)
-                {
-                    //If the flag is defeated the game ends and goes back to the menu
-                    MessageBox.Show($"{actualTeam} team won");
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    blueWindow.Close();
-                }
-            }
-            else
-            {
-                //Claculates defender idx and sets the piece to empty
-                int attackerIdx = CalcPieceIndex(defender.Row, defender.Column);
+		void Battle(Piece attacker, Piece defender, Button button)
+		{
+			if (attacker.Character.RankPower < defender.Character.RankPower)
+			{
+				if (defender.Character.Rank == Rank.Mine && attacker.Character.Rank == Rank.Miner)
+				{
+					//Sets the style (old position) of the winning piece
+					SetStyle(oldButton, Team.Empty);
+					int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+					//Moves the attacker to the defenders position
+					Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+					//Sets the attackers original position to Empty
+					Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+					//Sets the style (new position) of the winning piece
+					SetStyle(button, attacker, attacker.Character.Team);
+				}
+				else
+				{
+					//Sets the attackers to Empty
+					Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty, blueWindow.FindResource("HiddenButton") as Style), attacker.Row, attacker.Column);
+					//Sets the style of the losing piece to empty
+				}
+			}
+			else if (attacker.Character.RankPower > defender.Character.RankPower)
+			{
+				//Sets the style (old position) of the winning piece
+				SetStyle(oldButton, Team.Empty);
+				int lostIdx = CalcPieceIndex(defender.Row, defender.Column);
+				//Moves the attacker to the defenders position
+				Pieces[lostIdx] = new Piece(attacker.Character, defender.Row, defender.Column);
+				//Sets the attackers original position to Empty
+				Pieces[oldIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
+				//Sets the style (new position) of the winning piece
+				SetStyle(button, attacker, attacker.Character.Team);
+				if (defender.Character.Rank == Rank.Flag)
+				{
+					//If the flag is defeated the game ends and goes back to the menu
+					MessageBox.Show($"{actualTeam} team won");
+					MainWindow mainWindow = new MainWindow();
+					mainWindow.Show();
+					blueWindow.Close();
+				}
+			}
+			else
+			{
+				//Claculates defender idx and sets the piece to empty
+				int attackerIdx = CalcPieceIndex(defender.Row, defender.Column);
 				Pieces[attackerIdx] = new Piece(new Character(Rank.Empty, Team.Empty), defender.Row, defender.Column);
-                SetStyle(oldButton, Team.Empty);
-                //Calculates attacker idx and sets the piece to empty
-                var defenderIdx = CalcPieceIndex(oldRow, oldCol);
+				SetStyle(oldButton, Team.Empty);
+				//Calculates attacker idx and sets the piece to empty
+				var defenderIdx = CalcPieceIndex(oldRow, oldCol);
 				Pieces[defenderIdx] = new Piece(new Character(Rank.Empty, Team.Empty), attacker.Row, attacker.Column);
-                SetStyle(button, Team.Empty);
-            }
+				SetStyle(button, Team.Empty);
+			}
 
-        }
-        void FillWithEmptyButtons()
+		}
+		void FillWithEmptyButtons()
         {
             //Fills the Pieces collection with buttons so they show up in the window.
             for (int i = 1; i <= 10; i++)
