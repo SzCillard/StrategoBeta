@@ -176,7 +176,7 @@ namespace StrategoBeta.WPFClient
 						{
 
 						}
-						else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[actualSelectedidx].Character.Team != actualTeam)
+						else if (SelectedRank == Rank.Flag || SelectedRank == Rank.Mine || Pieces[oldIdx].Character.Team != actualTeam)
 						{
 
 						}
